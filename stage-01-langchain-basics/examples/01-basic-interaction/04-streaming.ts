@@ -4,12 +4,17 @@ import 'dotenv/config'
 /**
  * 流式输出演示
  * 实现类似 ChatGPT 的逐字输出效果
+ * 使用 DeepSeek 模型
  */
 
 async function streamingDemo() {
   const llm = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
     temperature: 0.7,
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
   })
 
   console.log('🌊 流式输出演示\n')

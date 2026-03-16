@@ -4,6 +4,7 @@ import 'dotenv/config'
 /**
  * Temperature 参数演示
  * 展示不同 temperature 值对输出的影响
+ * 使用 DeepSeek 模型
  */
 
 async function testTemperature() {
@@ -13,12 +14,20 @@ async function testTemperature() {
   console.log('提示词：', prompt)
   console.log('='.repeat(60))
 
+  const baseConfig = {
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
+  }
+
   // Temperature = 0（确定性输出）
   console.log('\n📍 Temperature = 0 (确定性输出)')
   console.log('-'.repeat(60))
   const llm0 = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
     temperature: 0,
+    ...baseConfig,
   })
 
   for (let i = 1; i <= 3; i++) {
@@ -30,8 +39,9 @@ async function testTemperature() {
   console.log('\n📍 Temperature = 0.7 (平衡输出)')
   console.log('-'.repeat(60))
   const llm07 = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
     temperature: 0.7,
+    ...baseConfig,
   })
 
   for (let i = 1; i <= 3; i++) {
@@ -43,8 +53,9 @@ async function testTemperature() {
   console.log('\n📍 Temperature = 1.0 (创造性输出)')
   console.log('-'.repeat(60))
   const llm10 = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
     temperature: 1.0,
+    ...baseConfig,
   })
 
   for (let i = 1; i <= 3; i++) {

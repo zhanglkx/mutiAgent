@@ -6,12 +6,17 @@ import 'dotenv/config'
 /**
  * 交互式聊天程序
  * 功能：命令行版 ChatGPT
+ * 使用 DeepSeek 模型
  */
 
 // 初始化模型
 const llm = new ChatOpenAI({
-  modelName: 'gpt-4o-mini',
+  modelName: 'deepseek-chat',
   temperature: 0.7,
+  configuration: {
+    baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+    apiKey: process.env.DEEPSEEK_API_KEY,
+  },
 })
 
 // 对话历史（类似 React 的 state）
