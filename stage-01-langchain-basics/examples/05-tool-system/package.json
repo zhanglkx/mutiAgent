@@ -1,0 +1,21 @@
+{
+  "name": "@ai-agent/examples-05-tool-system",
+  "version": "1.0.0",
+  "description": "第05章：工具系统核心示例",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch 01-basic-tool.ts"
+  },
+  "dependencies": {
+    "langchain": "^1.2.32",
+    "@langchain/openai": "^1.2.13",
+    "@langchain/core": "^1.1.32",
+    "zod": "^4.3.6",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3",
+    "tsx": "^4.19.2"
+  }
+}

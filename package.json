@@ -1,0 +1,18 @@
+{
+  "name": "ai-agent-tutorial",
+  "version": "1.0.0",
+  "description": "AI Agent 开发教程 - LangChain.js 和 LangGraph.js 完整学习项目",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter \"./stage-01-langchain-basics/**\" dev",
+    "build": "pnpm -r build"
+  },
+  "keywords": ["langchain", "langgraph", "ai", "agent", "tutorial"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

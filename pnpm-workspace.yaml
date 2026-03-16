@@ -1,0 +1,3 @@
+packages:
+  - 'stage-01-langchain-basics/examples/*'
+  - 'stage-01-langchain-basics/project'

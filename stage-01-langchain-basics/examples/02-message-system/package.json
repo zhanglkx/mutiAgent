@@ -1,0 +1,20 @@
+{
+  "name": "@ai-agent/examples-02-message-system",
+  "version": "1.0.0",
+  "description": "第02章：消息系统详解示例",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch 01-message-types.ts"
+  },
+  "dependencies": {
+    "langchain": "^1.2.32",
+    "@langchain/openai": "^1.2.13",
+    "@langchain/core": "^1.1.32",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3",
+    "tsx": "^4.19.2"
+  }
+}
