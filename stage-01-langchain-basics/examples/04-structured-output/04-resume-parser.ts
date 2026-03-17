@@ -5,6 +5,7 @@ import 'dotenv/config'
 /**
  * 简历解析器
  * 功能：从简历文本中提取结构化信息
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 // 定义简历结构
@@ -51,9 +52,14 @@ class ResumeParser {
   private llm: ChatOpenAI
 
   constructor() {
+    // 使用 DeepSeek 模型替代 gpt-4o-mini
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',
       temperature: 0,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
     }).withStructuredOutput(resumeSchema)
   }
 

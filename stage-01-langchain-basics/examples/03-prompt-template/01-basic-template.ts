@@ -5,10 +5,18 @@ import 'dotenv/config'
 /**
  * 基础模板使用
  * 演示 Prompt Template 的基本功能
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function basicTemplateDemo() {
-  const llm = new ChatOpenAI({ modelName: 'gpt-4o-mini' })
+  // 使用 DeepSeek 模型替代 gpt-4o-mini
+  const llm = new ChatOpenAI({
+    modelName: 'deepseek-chat',
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
+  })
 
   console.log('📝 Prompt Template 基础演示\n')
   console.log('='.repeat(60))

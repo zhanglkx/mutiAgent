@@ -5,6 +5,7 @@ import 'dotenv/config'
 /**
  * 情感分析
  * 文本分类和情感分析
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function sentimentAnalysis() {
@@ -18,7 +19,11 @@ async function sentimentAnalysis() {
   })
 
   const llm = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
   }).withStructuredOutput(sentimentSchema)
 
   const reviews = [

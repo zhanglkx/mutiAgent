@@ -6,6 +6,7 @@ import 'dotenv/config'
  * 智能编程助手
  * 功能：代码审查、解释、调试
  * 演示消息系统的综合应用
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 type Mode = 'review' | 'explain' | 'debug'
@@ -15,9 +16,14 @@ class CodingAssistant {
   private modes: Record<Mode, string>
 
   constructor() {
+    // 使用 DeepSeek 模型替代 gpt-4o-mini
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',
       temperature: 0.3,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
     })
 
     this.modes = {

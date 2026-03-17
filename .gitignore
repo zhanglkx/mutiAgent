@@ -5,3 +5,4 @@ dist
 *.log
 pnpm-debug.log*
 .pnpm-debug.log
+.env

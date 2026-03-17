@@ -12,6 +12,7 @@ import 'dotenv/config'
 /**
  * 智能天气助手
  * 功能：自动判断是否需要查询天气，并返回结果
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 // 1. 定义工具
@@ -58,9 +59,14 @@ class WeatherAssistant {
   constructor() {
     this.tools = [getWeatherTool, getCurrentTimeTool]
 
+    // 使用 DeepSeek 模型替代 gpt-4o-mini
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',
       temperature: 0,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
     }).bindTools(this.tools)
   }
 

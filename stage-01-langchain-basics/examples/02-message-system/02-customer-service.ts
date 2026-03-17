@@ -10,9 +10,17 @@ import 'dotenv/config'
 /**
  * 客服机器人示例
  * 演示如何用不同消息类型构建专业对话
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
-const llm = new ChatOpenAI({ modelName: 'gpt-4o-mini' })
+// 使用 DeepSeek 模型替代 gpt-4o-mini
+const llm = new ChatOpenAI({
+  modelName: 'deepseek-chat',
+  configuration: {
+    baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+    apiKey: process.env.DEEPSEEK_API_KEY,
+  },
+})
 
 // 系统设定：定义角色和规则
 const systemPrompt = new SystemMessage(`你是某电商平台的客服机器人。

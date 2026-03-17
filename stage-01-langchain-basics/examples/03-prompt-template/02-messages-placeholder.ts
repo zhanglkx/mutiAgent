@@ -10,10 +10,18 @@ import 'dotenv/config'
  * MessagesPlaceholder 演示
  * 用于在模板中插入历史对话
  * 类似 React 的 children 属性
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function messagesPlaceholderDemo() {
-  const llm = new ChatOpenAI({ modelName: 'gpt-4o-mini' })
+  // 使用 DeepSeek 模型替代 gpt-4o-mini
+  const llm = new ChatOpenAI({
+    modelName: 'deepseek-chat',
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
+  })
 
   console.log('🔄 MessagesPlaceholder 演示\n')
   console.log('='.repeat(60))

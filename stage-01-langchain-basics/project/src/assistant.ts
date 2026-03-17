@@ -11,6 +11,7 @@ import { travelPlanSchema, TravelPlan } from './schemas/travel-plan.schema'
 /**
  * 智能旅游助手
  * 功能：天气查询、景点推荐、预算计算、旅游计划生成
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 export class TouristAssistant {
   private llm: ChatOpenAI
@@ -19,9 +20,14 @@ export class TouristAssistant {
   constructor() {
     this.tools = [weatherTool, attractionsTool, budgetTool]
 
+    // 初始化 LLM - 使用 DeepSeek 模型
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',  // 改为 DeepSeek 模型
       temperature: 0.7,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',  // DeepSeek API 基础 URL
+        apiKey: process.env.DEEPSEEK_API_KEY,  // 从环境变量获取 API 密钥
+      },
     }).bindTools(this.tools)
   }
 
@@ -66,8 +72,12 @@ export class TouristAssistant {
    */
   async generatePlan(userInput: string): Promise<TravelPlan> {
     const llmWithSchema = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',  // 改为 DeepSeek 模型
       temperature: 0.7,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',  // DeepSeek API 基础 URL
+        apiKey: process.env.DEEPSEEK_API_KEY,  // 从环境变量获取 API 密钥
+      },
     }).withStructuredOutput(travelPlanSchema)
 
     return await llmWithSchema.invoke(userInput)

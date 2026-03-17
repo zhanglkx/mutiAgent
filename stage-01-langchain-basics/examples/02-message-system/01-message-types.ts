@@ -10,10 +10,18 @@ import 'dotenv/config'
 /**
  * 四种消息类型演示
  * SystemMessage, HumanMessage, AIMessage, ToolMessage
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function demonstrateMessageTypes() {
-  const llm = new ChatOpenAI({ modelName: 'gpt-4o-mini' })
+  // 使用 DeepSeek 模型替代 gpt-4o-mini
+  const llm = new ChatOpenAI({
+    modelName: 'deepseek-chat',
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
+  })
 
   console.log('📝 LangChain 四种核心消息类型\n')
   console.log('='.repeat(60))

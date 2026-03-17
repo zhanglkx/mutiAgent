@@ -7,6 +7,7 @@ import 'dotenv/config'
 /**
  * 基础工具定义
  * 演示如何定义和使用工具（Function Calling）
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function basicToolDemo() {
@@ -37,8 +38,12 @@ async function basicToolDemo() {
 
   // 2. 绑定工具到 LLM
   const llm = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
     temperature: 0,
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
   })
 
   const llmWithTools = llm.bindTools([getWeatherTool])

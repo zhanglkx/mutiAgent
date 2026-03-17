@@ -13,6 +13,7 @@ import 'dotenv/config'
 /**
  * 文件管理助手
  * 功能：读取、写入、列出文件
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 // 工具1：列出文件
@@ -85,9 +86,14 @@ class FileAssistant {
 
   constructor() {
     this.tools = [listFilesTool, readFileTool, writeFileTool]
+    // 使用 DeepSeek 模型替代 gpt-4o-mini
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',
       temperature: 0,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
     }).bindTools(this.tools)
   }
 

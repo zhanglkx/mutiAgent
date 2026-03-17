@@ -10,6 +10,7 @@ import 'dotenv/config'
 /**
  * 滑动窗口管理对话历史
  * 前端类比：类似虚拟列表，只渲染可见部分
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 class ConversationManager {
@@ -70,7 +71,14 @@ class ConversationManager {
 
 // 使用示例
 async function main() {
-  const llm = new ChatOpenAI({ modelName: 'gpt-4o-mini' })
+  // 使用 DeepSeek 模型替代 gpt-4o-mini
+  const llm = new ChatOpenAI({
+    modelName: 'deepseek-chat',
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
+  })
   const manager = new ConversationManager(3) // 只保留 3 轮对话
 
   manager.setSystemMessage('你是一个简洁的助手')

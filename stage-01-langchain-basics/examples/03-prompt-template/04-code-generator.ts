@@ -5,6 +5,7 @@ import 'dotenv/config'
 /**
  * 代码生成助手
  * 功能：根据描述生成 React/Vue/Angular 代码
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 type Framework = 'react' | 'vue' | 'angular'
@@ -14,9 +15,14 @@ class CodeGenerator {
   private templates: Record<Framework, ChatPromptTemplate>
 
   constructor() {
+    // 使用 DeepSeek 模型替代 gpt-4o-mini
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',
       temperature: 0.3,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
     })
 
     this.templates = {

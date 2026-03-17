@@ -5,12 +5,18 @@ import 'dotenv/config'
 /**
  * Few-Shot Learning 示例
  * 通过提供示例，让 AI 模仿特定格式
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function fewShotDemo() {
+  // 使用 DeepSeek 模型替代 gpt-4o-mini
   const llm = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
     temperature: 0.3,
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
   })
 
   console.log('🎯 Few-Shot Learning 演示\n')
@@ -43,7 +49,7 @@ function Button({ text, onClick }: ButtonProps) {
       `\`\`\`typescript
 interface InputProps {
   value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 function Input({ value, onChange }: InputProps) {

@@ -5,6 +5,7 @@ import 'dotenv/config'
 /**
  * 基础结构化输出
  * 让 AI 返回标准 JSON，就像调用类型安全的 API
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 async function basicStructuredOutput() {
@@ -20,7 +21,11 @@ async function basicStructuredOutput() {
 
   // 2. 让 LLM 支持结构化输出
   const llm = new ChatOpenAI({
-    modelName: 'gpt-4o-mini',
+    modelName: 'deepseek-chat',
+    configuration: {
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    },
   }).withStructuredOutput(personSchema)
 
   // 3. 调用（返回类型安全的对象！）

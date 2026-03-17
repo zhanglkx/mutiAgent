@@ -8,11 +8,25 @@
     "dev": "pnpm --filter \"./stage-01-langchain-basics/**\" dev",
     "build": "pnpm -r build"
   },
-  "keywords": ["langchain", "langgraph", "ai", "agent", "tutorial"],
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "ai",
+    "agent",
+    "tutorial"
+  ],
   "author": "",
   "license": "MIT",
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
+    "@langchain/core": "^1.1.32",
+    "@langchain/openai": "^1.2.13",
+    "dotenv": "^16.6.1"
   }
 }

@@ -12,6 +12,7 @@ import 'dotenv/config'
 /**
  * 多工具协作
  * 演示：计算器 + 货币转换
+ * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
 // 工具1：计算器
@@ -65,9 +66,14 @@ class MultiToolAssistant {
   constructor() {
     this.tools = [calculatorTool, currencyTool]
 
+    // 使用 DeepSeek 模型替代 gpt-4o-mini
     this.llm = new ChatOpenAI({
-      modelName: 'gpt-4o-mini',
+      modelName: 'deepseek-chat',
       temperature: 0,
+      configuration: {
+        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
     }).bindTools(this.tools)
   }
 
