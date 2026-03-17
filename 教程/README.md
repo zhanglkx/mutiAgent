@@ -7,6 +7,7 @@
 本教程专为**前端开发者**设计，使用 **TypeScript/JavaScript** 和你熟悉的工具链。
 
 ### 🟢 第一阶段：LangChain.js 基础 - 给大模型装上"手脚"
+
 **你会用到**：Node.js、TypeScript、熟悉的 async/await
 
 - [x] [01-大模型交互入门](./01-阶段一-LangChain基础/01-大模型交互入门.md) - 像调用 fetch 一样简单
@@ -17,6 +18,7 @@
 - [x] [实战项目：智能天气助手](./01-阶段一-LangChain基础/实战项目-智能天气助手/)
 
 ### 🔵 第二阶段：LangGraph.js 核心 - 构建有"大脑"的 Agent
+
 **你会用到**：状态管理思维（类似 Redux/Zustand）
 
 - [x] [01-为什么需要LangGraph](./02-阶段二-LangGraph核心/01-为什么需要LangGraph.md)
@@ -27,6 +29,7 @@
 - [x] [实战项目：多轮对话任务助手](./02-阶段二-LangGraph核心/实战项目-多轮对话助手/)
 
 ### 🟡 第三阶段：LangGraph.js 进阶 - 生产级特性
+
 **你会用到**：IndexedDB、LocalStorage、中间件模式
 
 - [x] [01-持久化与记忆](./03-阶段三-LangGraph进阶/01-持久化与记忆.md)
@@ -36,6 +39,7 @@
 - [x] [实战项目：审批流程 Agent](./03-阶段三-LangGraph进阶/实战项目-审批流程Agent/)
 
 ### 🟣 第四阶段：多智能体系统 - 团队协作
+
 **你会用到**：微前端思维、模块化架构
 
 - [x] [01-多智能体概述](./04-阶段四-多智能体/01-多智能体概述.md)
@@ -45,6 +49,7 @@
 - [x] [实战项目：智能客服系统](./04-阶段四-多智能体/实战项目-智能客服系统/)
 
 ### 🔴 第五阶段：工程化部署 - 上线生产
+
 **你会用到**：Next.js、React、Vercel 部署
 
 - [x] [01-流式输出](./05-阶段五-工程化部署/01-流式输出.md)
@@ -60,6 +65,7 @@
 ### 前端开发者的优势：
 
 ✅ **你已经会的技能直接迁移**：
+
 - `async/await` → LangChain 的异步调用
 - `useState/useReducer` → LangGraph 状态管理
 - `React Router` → LangGraph 条件路由
@@ -202,13 +208,13 @@ npm run dev
 
 ### 对比 Python vs TypeScript
 
-| 特性 | Python (LangChain) | TypeScript (LangChain.js) |
-|-----|-------------------|-------------------------|
-| **前端集成** | 需要后端 API | 直接在 Next.js 中使用 |
-| **类型安全** | 需要 Pydantic | 原生 TypeScript 支持 |
-| **生态系统** | AI/ML 丰富 | Web 开发丰富 |
-| **部署** | 需要 Python 环境 | Vercel 一键部署 |
-| **学习曲线** | 需学 Python 语法 | 零学习成本 |
+| 特性         | Python (LangChain) | TypeScript (LangChain.js) |
+| ------------ | ------------------ | ------------------------- |
+| **前端集成** | 需要后端 API       | 直接在 Next.js 中使用     |
+| **类型安全** | 需要 Pydantic      | 原生 TypeScript 支持      |
+| **生态系统** | AI/ML 丰富         | Web 开发丰富              |
+| **部署**     | 需要 Python 环境   | Vercel 一键部署           |
+| **学习曲线** | 需学 Python 语法   | 零学习成本                |
 
 ### 前端开发者的优势
 

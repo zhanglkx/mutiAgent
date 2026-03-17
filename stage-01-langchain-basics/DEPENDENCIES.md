@@ -4,22 +4,22 @@
 
 ### 核心依赖
 
-| 包名 | 版本 | 说明 |
-|------|------|------|
-| langchain | ^1.2.32 | LangChain 核心库 |
-| @langchain/openai | ^1.2.13 | OpenAI 集成 |
-| @langchain/anthropic | ^1.3.23 | Anthropic Claude 集成 |
-| @langchain/core | ^1.1.32 | LangChain 核心类型和工具 |
-| zod | ^4.3.6 | TypeScript 数据验证 |
-| dotenv | ^16.4.5 | 环境变量管理 |
+| 包名                 | 版本    | 说明                     |
+| -------------------- | ------- | ------------------------ |
+| langchain            | ^1.2.32 | LangChain 核心库         |
+| @langchain/openai    | ^1.2.13 | OpenAI 集成              |
+| @langchain/anthropic | ^1.3.23 | Anthropic Claude 集成    |
+| @langchain/core      | ^1.1.32 | LangChain 核心类型和工具 |
+| zod                  | ^4.3.6  | TypeScript 数据验证      |
+| dotenv               | ^16.4.5 | 环境变量管理             |
 
 ### 开发依赖
 
-| 包名 | 版本 | 说明 |
-|------|------|------|
-| typescript | ^5.7.3 | TypeScript 编译器 |
-| tsx | ^4.19.2 | TypeScript 执行器 |
-| @types/node | ^22.10.7 | Node.js 类型定义 |
+| 包名        | 版本     | 说明              |
+| ----------- | -------- | ----------------- |
+| typescript  | ^5.7.3   | TypeScript 编译器 |
+| tsx         | ^4.19.2  | TypeScript 执行器 |
+| @types/node | ^22.10.7 | Node.js 类型定义  |
 
 ## 安装方式
 
@@ -81,6 +81,7 @@ pnpm up langchain@latest @langchain/openai@latest
 ## 版本更新日志
 
 ### 2026-03-16
+
 - ✅ 更新所有依赖到最新稳定版本
 - ✅ langchain: 0.1.0 → 1.2.32
 - ✅ @langchain/openai: 0.0.19 → 1.2.13

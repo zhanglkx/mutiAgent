@@ -35,8 +35,8 @@
 确保你的环境满足以下要求：
 
 \`\`\`bash
-node -v    # >= v20.0.0
-pnpm -v    # >= 8.0.0
+node -v # >= v20.0.0
+pnpm -v # >= 8.0.0
 \`\`\`
 
 如果还没有安装 pnpm：
@@ -48,33 +48,43 @@ npm install -g pnpm
 ### 2. 克隆项目并安装依赖
 
 \`\`\`bash
+
 # 克隆项目
+
 git clone <your-repo-url>
 cd mutiAgent
 
 # 安装所有依赖
+
 pnpm install
 \`\`\`
 
 ### 3. 配置环境变量
 
 \`\`\`bash
+
 # 复制环境变量模板
+
 cp .env.example .env
 
 # 编辑 .env 文件，填入你的 API Keys
+
 \`\`\`
 
 \`.env\` 文件内容示例：
 
 \`\`\`bash
+
 # OpenAI API Key (推荐用于学习)
+
 OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Anthropic API Key (推荐用于生产，可选)
+
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # LangSmith 调试工具 (可选)
+
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=lsv2_xxxxxxxxxxxxx
 LANGCHAIN_PROJECT=langchain-basics-tutorial
@@ -83,10 +93,13 @@ LANGCHAIN_PROJECT=langchain-basics-tutorial
 ### 4. 运行示例代码
 
 \`\`\`bash
+
 # 运行第一阶段的示例
+
 npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
 
 # 运行实战项目
+
 cd stage-01-langchain-basics/project
 pnpm start
 \`\`\`
@@ -95,26 +108,26 @@ pnpm start
 
 \`\`\`
 mutiAgent/
-├── .env.example                     # 环境变量模板
-├── .gitignore                       # Git 忽略文件
-├── package.json                     # 根 package.json
-├── pnpm-workspace.yaml              # pnpm workspace 配置
-├── 教程/                            # 教程文档
-│   ├── 01-阶段一-LangChain基础/
-│   ├── 02-阶段二-LangGraph核心/
-│   └── ...
-└── stage-01-langchain-basics/      # 第一阶段实现
-    ├── README.md                    # 第一阶段详细文档
-    ├── examples/                    # 示例代码
-    │   ├── 01-basic-interaction/   # 各章节示例
-    │   ├── 02-message-system/
-    │   ├── 03-prompt-template/
-    │   ├── 04-structured-output/
-    │   └── 05-tool-system/
-    └── project/                     # 实战项目
-        ├── src/
-        ├── package.json
-        └── tsconfig.json
+├── .env.example # 环境变量模板
+├── .gitignore # Git 忽略文件
+├── package.json # 根 package.json
+├── pnpm-workspace.yaml # pnpm workspace 配置
+├── 教程/ # 教程文档
+│ ├── 01-阶段一-LangChain基础/
+│ ├── 02-阶段二-LangGraph核心/
+│ └── ...
+└── stage-01-langchain-basics/ # 第一阶段实现
+├── README.md # 第一阶段详细文档
+├── examples/ # 示例代码
+│ ├── 01-basic-interaction/ # 各章节示例
+│ ├── 02-message-system/
+│ ├── 03-prompt-template/
+│ ├── 04-structured-output/
+│ └── 05-tool-system/
+└── project/ # 实战项目
+├── src/
+├── package.json
+└── tsconfig.json
 \`\`\`
 
 ## 🛠️ 技术栈
@@ -153,19 +166,25 @@ mutiAgent/
 ## 🔧 常用命令
 
 \`\`\`bash
+
 # 安装所有依赖
+
 pnpm install
 
 # 运行特定包的脚本
+
 pnpm --filter @ai-agent/tourist-assistant start
 
 # 清理所有 node_modules
+
 pnpm -r clean
 
 # 构建所有包
+
 pnpm -r build
 
 # 查看依赖树
+
 pnpm list --depth=1
 \`\`\`
 
@@ -210,12 +229,13 @@ pnpm install
 A: 使用 \`--filter\` 参数：
 
 \`\`\`bash
-pnpm --filter "@ai-agent/*" install
+pnpm --filter "@ai-agent/\*" install
 \`\`\`
 
 ### Q: API Key 在哪里获取？
 
 A:
+
 - OpenAI: https://platform.openai.com/api-keys
 - Anthropic: https://console.anthropic.com/
 

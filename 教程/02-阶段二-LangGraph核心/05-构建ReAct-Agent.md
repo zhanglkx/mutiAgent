@@ -78,12 +78,7 @@ import { Annotation, StateGraph } from '@langchain/langgraph';
 import { ChatOpenAI } from '@langchain/openai';
 import { tool } from '@langchain/core/tools';
 import { z } from 'zod';
-import {
-  BaseMessage,
-  HumanMessage,
-  AIMessage,
-  ToolMessage,
-} from '@langchain/core/messages';
+import { BaseMessage, HumanMessage, AIMessage, ToolMessage } from '@langchain/core/messages';
 import 'dotenv/config';
 
 /**
@@ -96,9 +91,9 @@ const getWeatherTool = tool(
   async ({ city }) => {
     console.log(`  🌤️  查询 ${city} 天气...`);
     const weatherData: Record<string, string> = {
-      '北京': '25°C，晴天',
-      '上海': '28°C，多云',
-      '广州': '32°C，雷阵雨',
+      北京: '25°C，晴天',
+      上海: '28°C，多云',
+      广州: '32°C，雷阵雨',
     };
     return weatherData[city] || '暂无数据';
   },
@@ -159,7 +154,7 @@ async function agentNode(state: State): Promise<Partial<State>> {
   // 打印 AI 的想法
   if (response.tool_calls && response.tool_calls.length > 0) {
     console.log('💡 决定调用工具:');
-    response.tool_calls.forEach((tc) => {
+    response.tool_calls.forEach(tc => {
       console.log(`   - ${tc.name}(${JSON.stringify(tc.args)})`);
     });
   } else {
@@ -179,7 +174,7 @@ async function toolsNode(state: State): Promise<Partial<State>> {
   if ('tool_calls' in lastMessage && lastMessage.tool_calls) {
     for (const toolCall of lastMessage.tool_calls) {
       // 找到对应的工具
-      const tool = tools.find((t) => t.name === toolCall.name);
+      const tool = tools.find(t => t.name === toolCall.name);
 
       if (tool) {
         // 执行工具
@@ -204,10 +199,10 @@ function shouldContinue(state: State): 'continue' | 'end' {
 
   // 检查是否有工具调用
   if ('tool_calls' in lastMessage && lastMessage.tool_calls?.length > 0) {
-    return 'continue';  // 有工具调用，继续
+    return 'continue'; // 有工具调用，继续
   }
 
-  return 'end';  // 没有工具调用，结束
+  return 'end'; // 没有工具调用，结束
 }
 
 // 7. 构建图
@@ -220,8 +215,8 @@ const graph = new StateGraph(AgentState)
 
   // 条件边（核心！）
   .addConditionalEdges('agent', shouldContinue, {
-    continue: 'tools',  // 执行工具
-    end: '__end__',     // 结束
+    continue: 'tools', // 执行工具
+    end: '__end__', // 结束
   })
 
   // 工具执行后回到 agent
@@ -247,7 +242,7 @@ async function testAgent() {
     });
 
     // 获取最后的 AI 回复
-    const aiMessages = result.messages.filter((m) => m._getType() === 'ai');
+    const aiMessages = result.messages.filter(m => m._getType() === 'ai');
     const lastAIMessage = aiMessages[aiMessages.length - 1];
 
     console.log('\n✅ 最终回答:');
@@ -371,9 +366,7 @@ async function main() {
   console.log('🤖 ReAct Agent 已启动\n');
 
   const result = await agent.invoke({
-    messages: [
-      new HumanMessage('搜索 LangGraph 相关资料，并保存到笔记'),
-    ],
+    messages: [new HumanMessage('搜索 LangGraph 相关资料，并保存到笔记')],
   });
 
   // 查看所有消息
@@ -555,12 +548,12 @@ complexTask();
 
 ### 🔄 前端类比汇总
 
-| ReAct 概念 | 前端类比 | 说明 |
-|-----------|---------|------|
-| Agent 节点 | Controller | 决策中心 |
-| 工具节点 | API 调用 | 执行操作 |
-| 循环 | 事件循环 | 持续处理 |
-| State | Redux Store | 状态管理 |
+| ReAct 概念 | 前端类比    | 说明     |
+| ---------- | ----------- | -------- |
+| Agent 节点 | Controller  | 决策中心 |
+| 工具节点   | API 调用    | 执行操作 |
+| 循环       | 事件循环    | 持续处理 |
+| State      | Redux Store | 状态管理 |
 
 ---
 
@@ -583,7 +576,7 @@ A: 在 State 中添加计数器，路由函数中检查：
 ```typescript
 function shouldContinue(state: State): string {
   if (state.loopCount >= 10) {
-    return 'end';  // 防止无限循环
+    return 'end'; // 防止无限循环
   }
   // ...
 }

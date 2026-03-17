@@ -1,5 +1,5 @@
-import { tool } from '@langchain/core/tools'
-import { z } from 'zod'
+import { tool } from '@langchain/core/tools';
+import { z } from 'zod';
 
 /**
  * 景点推荐工具
@@ -37,10 +37,10 @@ export const attractionsTool = tool(
         现代: ['深圳湾', '欢乐谷', '世界之窗', '东部华侨城'],
         美食: ['客家菜', '潮汕火锅', '海鲜', '茶餐厅'],
       },
-    }
+    };
 
-    const attractions = mockAttractions[city]?.[category] || []
-    return `${city}的${category}景点推荐：${attractions.join('、')}`
+    const attractions = mockAttractions[city]?.[category] || [];
+    return `${city}的${category}景点推荐：${attractions.join('、')}`;
   },
   {
     name: 'get_attractions',
@@ -50,4 +50,4 @@ export const attractionsTool = tool(
       category: z.enum(['历史', '现代', '美食']).describe('景点类别'),
     }),
   }
-)
+);

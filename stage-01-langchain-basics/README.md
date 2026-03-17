@@ -21,22 +21,22 @@
 
 \`\`\`
 stage-01-langchain-basics/
-├── examples/                        # 各章节示例代码
-│   ├── 01-basic-interaction/       # 第01章：大模型交互入门
-│   ├── 02-message-system/          # 第02章：消息系统详解
-│   ├── 03-prompt-template/         # 第03章：提示词模板
-│   ├── 04-structured-output/       # 第04章：结构化输出
-│   └── 05-tool-system/             # 第05章：工具系统核心
-├── project/                         # 实战项目：智能旅游助手
-│   ├── src/
-│   │   ├── tools/                  # 工具定义
-│   │   ├── schemas/                # 数据结构
-│   │   ├── assistant.ts            # 助手主类
-│   │   └── index.ts                # 入口文件
-│   ├── .env.example                # 环境变量示例
-│   ├── package.json
-│   └── tsconfig.json
-└── README.md                        # 本文档
+├── examples/ # 各章节示例代码
+│ ├── 01-basic-interaction/ # 第01章：大模型交互入门
+│ ├── 02-message-system/ # 第02章：消息系统详解
+│ ├── 03-prompt-template/ # 第03章：提示词模板
+│ ├── 04-structured-output/ # 第04章：结构化输出
+│ └── 05-tool-system/ # 第05章：工具系统核心
+├── project/ # 实战项目：智能旅游助手
+│ ├── src/
+│ │ ├── tools/ # 工具定义
+│ │ ├── schemas/ # 数据结构
+│ │ ├── assistant.ts # 助手主类
+│ │ └── index.ts # 入口文件
+│ ├── .env.example # 环境变量示例
+│ ├── package.json
+│ └── tsconfig.json
+└── README.md # 本文档
 \`\`\`
 
 ## 🚀 快速开始
@@ -53,10 +53,13 @@ stage-01-langchain-basics/
 在项目根目录下运行：
 
 \`\`\`bash
+
 # 安装 pnpm（如果还没有）
+
 npm install -g pnpm
 
 # 安装所有依赖
+
 pnpm install
 \`\`\`
 
@@ -65,22 +68,29 @@ pnpm install
 复制 \`.env.example\` 文件为 \`.env\` 并填入你的 API Keys：
 
 \`\`\`bash
+
 # 在项目根目录
+
 cp .env.example .env
 
 # 编辑 .env 文件，填入你的 API Keys
+
 \`\`\`
 
 \`.env\` 文件内容示例：
 
 \`\`\`bash
+
 # OpenAI API Key (推荐用于学习)
+
 OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Anthropic API Key (推荐用于生产，可选)
+
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # LangSmith 调试工具 (可选)
+
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=lsv2_xxxxxxxxxxxxx
 LANGCHAIN_PROJECT=langchain-basics-tutorial
@@ -91,34 +101,46 @@ LANGCHAIN_PROJECT=langchain-basics-tutorial
 每个示例都可以独立运行：
 
 \`\`\`bash
+
 # 第01章示例
+
 pnpm --filter @ai-agent/examples-01-basic-interaction dev
+
 # 或直接运行单个文件
+
 npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
 
 # 第02章示例
+
 npx tsx stage-01-langchain-basics/examples/02-message-system/01-message-types.ts
 
 # 第03章示例
+
 npx tsx stage-01-langchain-basics/examples/03-prompt-template/01-basic-template.ts
 
 # 第04章示例
+
 npx tsx stage-01-langchain-basics/examples/04-structured-output/01-basic-structured.ts
 
 # 第05章示例
+
 npx tsx stage-01-langchain-basics/examples/05-tool-system/01-basic-tool.ts
 \`\`\`
 
 ### 5. 运行实战项目
 
 \`\`\`bash
+
 # 进入项目目录
+
 cd stage-01-langchain-basics/project
 
 # 安装依赖（如果还没有）
+
 pnpm install
 
 # 运行项目
+
 pnpm start
 \`\`\`
 
@@ -136,6 +158,7 @@ pnpm start
 4. \`04-streaming.ts\` - 流式输出演示
 
 **核心知识点：**
+
 - \`ChatOpenAI\` 初始化
 - \`llm.invoke()\` 方法
 - Temperature 参数控制
@@ -153,6 +176,7 @@ pnpm start
 4. \`04-coding-assistant.ts\` - 智能编程助手
 
 **核心知识点：**
+
 - SystemMessage, HumanMessage, AIMessage, ToolMessage
 - 对话历史管理
 - 滑动窗口优化
@@ -169,6 +193,7 @@ pnpm start
 4. \`04-code-generator.ts\` - 多框架代码生成器
 
 **核心知识点：**
+
 - \`ChatPromptTemplate\`
 - \`MessagesPlaceholder\`
 - Few-Shot 示例学习
@@ -186,6 +211,7 @@ pnpm start
 4. \`04-resume-parser.ts\` - 简历解析器
 
 **核心知识点：**
+
 - Zod Schema 定义
 - \`withStructuredOutput()\`
 - 类型安全的数据提取
@@ -202,6 +228,7 @@ pnpm start
 4. \`04-file-assistant.ts\` - 文件管理助手
 
 **核心知识点：**
+
 - \`tool()\` 定义工具
 - \`bindTools()\` 绑定工具
 - 工具执行流程
@@ -233,14 +260,18 @@ pnpm start
 
 ======================================================================
 📍 场景 1：查询北京天气
-----------------------------------------------------------------------
+
+---
+
 🔧 调用工具: get_weather
 📤 结果: {"temp":25,"condition":"晴天","suggestion":"适合出游"}
 💬 回复: 北京现在天气很好，温度25°C，晴天，非常适合出游！
 
 ======================================================================
 📍 场景 2：推荐上海的历史景点
-----------------------------------------------------------------------
+
+---
+
 🔧 调用工具: get_attractions
 📤 结果: 上海的历史景点推荐：外滩、豫园、城隍庙、南京路
 💬 回复: 上海的历史景点推荐：外滩、豫园、城隍庙、南京路...
@@ -265,6 +296,7 @@ A: pnpm 提供更快的安装速度和更好的磁盘空间利用，特别适合
 ### Q: 示例代码运行失败怎么办？
 
 A: 请检查：
+
 1. API Key 是否正确配置
 2. Node.js 版本是否 >= 20
 3. 网络连接是否正常
@@ -278,7 +310,7 @@ A: 将代码中的 \`ChatOpenAI\` 替换为 \`ChatAnthropic\`：
 import { ChatAnthropic } from '@langchain/anthropic'
 
 const llm = new ChatAnthropic({
-  modelName: 'claude-3-5-sonnet-20241022',
+modelName: 'claude-3-5-sonnet-20241022',
 })
 \`\`\`
 
@@ -337,4 +369,3 @@ MIT License
 - typescript: ^5.7.3
 
 详细信息请查看 [DEPENDENCIES.md](./stage-01-langchain-basics/DEPENDENCIES.md)
-

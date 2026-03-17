@@ -13,9 +13,9 @@ DeepSeek 是中国的大语言模型，性能强大且价格实惠。
 
 ### 模型列表
 
-| 模型名称 | 用途 | 价格 |
-|---------|------|------|
-| deepseek-chat | 通用对话 | ￥1/百万tokens |
+| 模型名称       | 用途     | 价格           |
+| -------------- | -------- | -------------- |
+| deepseek-chat  | 通用对话 | ￥1/百万tokens |
 | deepseek-coder | 代码生成 | ￥1/百万tokens |
 
 ## 配置方法
@@ -42,12 +42,12 @@ import { ChatOpenAI } from '@langchain/openai'
 import 'dotenv/config'
 
 const llm = new ChatOpenAI({
-  modelName: 'deepseek-chat',
-  temperature: 0.7,
-  configuration: {
-    baseURL: process.env.DEEPSEEK_BASE_URL,
-    apiKey: process.env.DEEPSEEK_API_KEY,
-  },
+modelName: 'deepseek-chat',
+temperature: 0.7,
+configuration: {
+baseURL: process.env.DEEPSEEK_BASE_URL,
+apiKey: process.env.DEEPSEEK_API_KEY,
+},
 })
 
 const response = await llm.invoke('你好，介绍一下 React')
@@ -62,13 +62,13 @@ import 'dotenv/config'
 
 // 创建聊天模型
 const llm = createDeepSeekChat({
-  temperature: 0.7,
-  maxTokens: 2000,
+temperature: 0.7,
+maxTokens: 2000,
 })
 
 // 创建代码模型（用于代码生成）
 const coder = createDeepSeekCoder({
-  temperature: 0.3, // 代码生成建议低温度
+temperature: 0.3, // 代码生成建议低温度
 })
 \`\`\`
 
@@ -80,18 +80,20 @@ const coder = createDeepSeekCoder({
 2. 直接运行示例即可
 
 \`\`\`bash
+
 # 运行第一个示例
+
 npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
 \`\`\`
 
 ## 性能对比
 
-| 指标 | DeepSeek | GPT-4o-mini | Claude 3.5 |
-|------|----------|-------------|-----------|
-| 价格 | ￥1/百万tokens | $0.15/百万tokens | $3/百万tokens |
-| 中文理解 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| 代码生成 | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| 响应速度 | ⚡⚡⚡ | ⚡⚡ | ⚡⚡ |
+| 指标     | DeepSeek       | GPT-4o-mini      | Claude 3.5    |
+| -------- | -------------- | ---------------- | ------------- |
+| 价格     | ￥1/百万tokens | $0.15/百万tokens | $3/百万tokens |
+| 中文理解 | ⭐⭐⭐⭐⭐     | ⭐⭐⭐⭐         | ⭐⭐⭐⭐⭐    |
+| 代码生成 | ⭐⭐⭐⭐⭐     | ⭐⭐⭐⭐         | ⭐⭐⭐⭐⭐    |
+| 响应速度 | ⚡⚡⚡         | ⚡⚡             | ⚡⚡          |
 
 ## 注意事项
 
@@ -112,14 +114,15 @@ A: 修改代码中的初始化部分：
 \`\`\`typescript
 // 改回 OpenAI
 const llm = new ChatOpenAI({
-  modelName: 'gpt-4o-mini',
-  temperature: 0.7,
+modelName: 'gpt-4o-mini',
+temperature: 0.7,
 })
 \`\`\`
 
 ### Q: DeepSeek 支持哪些功能？
 
 A: 支持所有教程中的功能：
+
 - ✅ 基础对话
 - ✅ 流式输出
 - ✅ Function Calling（工具调用）
@@ -129,6 +132,7 @@ A: 支持所有教程中的功能：
 ### Q: 遇到错误怎么办？
 
 A: 检查：
+
 1. API Key 是否正确
 2. baseURL 是否配置
 3. 网络连接是否正常

@@ -1,5 +1,5 @@
-import { tool } from '@langchain/core/tools'
-import { z } from 'zod'
+import { tool } from '@langchain/core/tools';
+import { z } from 'zod';
 
 /**
  * 预算计算工具
@@ -13,10 +13,10 @@ export const budgetTool = tool(
       西安: { 经济: 250, 舒适: 500, 豪华: 1000 },
       杭州: { 经济: 350, 舒适: 700, 豪华: 1300 },
       深圳: { 经济: 400, 舒适: 800, 豪华: 1500 },
-    }
+    };
 
-    const daily = dailyBudget[city]?.[level] || 500
-    const total = daily * days
+    const daily = dailyBudget[city]?.[level] || 500;
+    const total = daily * days;
 
     return JSON.stringify({
       city,
@@ -30,7 +30,7 @@ export const budgetTool = tool(
         transportation: Math.round(daily * 0.2),
         attractions: Math.round(daily * 0.1),
       },
-    })
+    });
   },
   {
     name: 'calculate_budget',
@@ -41,4 +41,4 @@ export const budgetTool = tool(
       level: z.enum(['经济', '舒适', '豪华']).describe('消费水平'),
     }),
   }
-)
+);

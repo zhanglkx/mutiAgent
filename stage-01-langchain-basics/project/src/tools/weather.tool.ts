@@ -1,5 +1,5 @@
-import { tool } from '@langchain/core/tools'
-import { z } from 'zod'
+import { tool } from '@langchain/core/tools';
+import { z } from 'zod';
 
 /**
  * 天气查询工具
@@ -14,15 +14,15 @@ export const weatherTool = tool(
       西安: { temp: 27, condition: '晴天', suggestion: '适合旅游' },
       杭州: { temp: 26, condition: '多云转晴', suggestion: '天气不错' },
       深圳: { temp: 30, condition: '晴天', suggestion: '注意防晒' },
-    }
+    };
 
     const weather = mockWeather[city] || {
       temp: 20,
       condition: '未知',
       suggestion: '暂无数据',
-    }
+    };
 
-    return JSON.stringify(weather)
+    return JSON.stringify(weather);
   },
   {
     name: 'get_weather',
@@ -31,4 +31,4 @@ export const weatherTool = tool(
       city: z.string().describe('城市名称，如：北京、上海'),
     }),
   }
-)
+);

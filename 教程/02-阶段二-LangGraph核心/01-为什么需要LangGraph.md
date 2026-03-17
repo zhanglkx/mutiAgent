@@ -41,6 +41,7 @@ async chat(userInput: string): Promise<string> {
 ```
 
 **问题**：
+
 - ❌ 循环逻辑散落在代码各处
 - ❌ 难以追踪执行流程
 - ❌ 无法可视化
@@ -70,14 +71,14 @@ async chat(userInput: string): Promise<string> {
 if (需要查航班) {
   const flights = await searchFlights();
   if (flights.length === 0) {
-    return "没有航班";
+    return '没有航班';
   }
   if (flights[0].price > budget) {
     // 询问用户...
     if (用户同意) {
       // 继续...
     } else {
-      return "已取消";
+      return '已取消';
     }
   }
   // 更多 if/else...
@@ -101,12 +102,12 @@ if (需要查航班) {
 
 ### 传统程序 vs Agent
 
-| 特性 | 传统程序 | Agent |
-|-----|---------|-------|
-| 执行方式 | 线性执行 | **循环推理** |
-| 决策 | 预设规则 | **AI 自主决策** |
-| 工具使用 | 按顺序调用 | **按需调用** |
-| 错误处理 | try/catch | **自我修正** |
+| 特性     | 传统程序   | Agent           |
+| -------- | ---------- | --------------- |
+| 执行方式 | 线性执行   | **循环推理**    |
+| 决策     | 预设规则   | **AI 自主决策** |
+| 工具使用 | 按顺序调用 | **按需调用**    |
+| 错误处理 | try/catch  | **自我修正**    |
 
 **Agent 的本质**：
 
@@ -129,6 +130,7 @@ function agentLoop() {
 ```
 
 这就是著名的 **ReAct 模式**：
+
 - **Re**asoning（推理）
 - **Act**ing（行动）
 
@@ -191,10 +193,10 @@ function toolNode(state: AgentState) {
 
 // 3. 构建图
 const graph = new StateGraph<AgentState>()
-  .addNode('think', thinkNode)    // 添加节点
+  .addNode('think', thinkNode) // 添加节点
   .addNode('tool', toolNode)
-  .addEdge('think', 'tool')        // 添加边（流转）
-  .addEdge('tool', 'think')        // 可以循环
+  .addEdge('think', 'tool') // 添加边（流转）
+  .addEdge('tool', 'think') // 可以循环
   .compile();
 
 // 4. 运行
@@ -280,6 +282,7 @@ console.log(graph.getGraph().drawMermaid());
 ```
 
 输出：
+
 ```mermaid
 graph TD
   START --> think
@@ -301,16 +304,14 @@ for await (const step of graph.stream(input)) {
 
 ```typescript
 // 在敏感操作前暂停
-const graph = builder
-  .addNode('delete_data', deleteNode)
-  .compile({
-    interruptBefore: ['delete_data']  // 👈 在删除前暂停
-  });
+const graph = builder.addNode('delete_data', deleteNode).compile({
+  interruptBefore: ['delete_data'], // 👈 在删除前暂停
+});
 
 // 等待人工确认后继续
 await graph.invoke(input, { thread_id: '123' });
 // ... 用户确认 ...
-await graph.invoke(null, { thread_id: '123' });  // 从断点继续
+await graph.invoke(null, { thread_id: '123' }); // 从断点继续
 ```
 
 ### 4. 可持久化
@@ -426,13 +427,13 @@ graph
 
 ### 🔄 前端类比汇总
 
-| LangGraph 概念 | 前端类比 | 说明 |
-|---------------|---------|------|
-| State | Redux Store | 全局状态管理 |
-| Nodes | Reducer | 处理状态变化 |
-| Edges | React Router | 页面跳转逻辑 |
-| Graph | App | 整个应用 |
-| Checkpointer | LocalStorage | 持久化存储 |
+| LangGraph 概念 | 前端类比     | 说明         |
+| -------------- | ------------ | ------------ |
+| State          | Redux Store  | 全局状态管理 |
+| Nodes          | Reducer      | 处理状态变化 |
+| Edges          | React Router | 页面跳转逻辑 |
+| Graph          | App          | 整个应用     |
+| Checkpointer   | LocalStorage | 持久化存储   |
 
 ---
 
@@ -447,10 +448,12 @@ graph
 ## 💡 扩展阅读
 
 **推荐阅读**：
+
 - [ReAct 论文](https://arxiv.org/abs/2210.03629)
 - [LangGraph 官方文档](https://langchain-ai.github.io/langgraphjs/)
 
 **思考**：
+
 - 为什么 ChatGPT 不需要 LangGraph？
   - 提示：ChatGPT 是对话型，不需要调用工具
 - Agent 和 Workflow 的区别？

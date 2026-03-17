@@ -51,15 +51,18 @@
 ### 7. ✅ 实战项目：智能旅游助手
 
 **工具模块：**
+
 - [x] weather.tool.ts - 天气查询工具
 - [x] attractions.tool.ts - 景点推荐工具
 - [x] budget.tool.ts - 预算计算工具
 - [x] index.ts - 工具导出
 
 **数据结构：**
+
 - [x] travel-plan.schema.ts - Zod Schema 定义
 
 **核心逻辑：**
+
 - [x] assistant.ts - TouristAssistant 类
 - [x] index.ts - 主程序入口
 
@@ -79,21 +82,25 @@
 ## 🎯 技术特点
 
 ### 1. Monorepo 架构
+
 - 使用 pnpm workspace
 - 统一依赖管理
 - 子包独立配置
 
 ### 2. 类型安全
+
 - 全 TypeScript 编写
 - Zod Schema 验证
 - 完整类型推断
 
 ### 3. 代码质量
+
 - 清晰的注释
 - 一致的代码风格
 - 完整的错误处理
 
 ### 4. 实用性强
+
 - 每个示例都可独立运行
 - 循序渐进的难度设计
 - 丰富的注释和说明
@@ -103,29 +110,38 @@
 ### 1. 安装依赖
 
 \`\`\`bash
+
 # 确保已安装 pnpm
+
 npm install -g pnpm
 
 # 安装所有依赖
+
 pnpm install
 \`\`\`
 
 ### 2. 配置环境变量
 
 \`\`\`bash
+
 # 复制环境变量模板
+
 cp .env.example .env
 
 # 编辑 .env 文件，填入你的 OpenAI API Key
+
 \`\`\`
 
 ### 3. 运行示例
 
 \`\`\`bash
+
 # 运行第一个示例
+
 npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
 
 # 运行实战项目
+
 cd stage-01-langchain-basics/project
 pnpm start
 \`\`\`

@@ -1,31 +1,33 @@
 # 🎉 依赖版本已更新到最新！
 
 ## ✅ 更新完成时间
+
 2026年3月16日
 
 ## 📦 版本更新明细
 
 ### 核心依赖更新
 
-| 包名 | 旧版本 | 新版本 | 变化 |
-|------|--------|--------|------|
-| langchain | 0.1.0 | **1.2.32** | ⬆️ 主版本升级 |
-| @langchain/openai | 0.0.19 | **1.2.13** | ⬆️ 主版本升级 |
-| @langchain/anthropic | 0.1.0 | **1.3.23** | ⬆️ 主版本升级 |
-| @langchain/core | 0.1.0 | **1.1.32** | ⬆️ 主版本升级 |
-| zod | 3.22.4 | **4.3.6** | ⬆️ 主版本升级 |
+| 包名                 | 旧版本 | 新版本     | 变化          |
+| -------------------- | ------ | ---------- | ------------- |
+| langchain            | 0.1.0  | **1.2.32** | ⬆️ 主版本升级 |
+| @langchain/openai    | 0.0.19 | **1.2.13** | ⬆️ 主版本升级 |
+| @langchain/anthropic | 0.1.0  | **1.3.23** | ⬆️ 主版本升级 |
+| @langchain/core      | 0.1.0  | **1.1.32** | ⬆️ 主版本升级 |
+| zod                  | 3.22.4 | **4.3.6**  | ⬆️ 主版本升级 |
 
 ### 开发依赖更新
 
-| 包名 | 旧版本 | 新版本 | 变化 |
-|------|--------|--------|------|
-| typescript | 5.3.3 | **5.7.3** | ⬆️ 次版本升级 |
-| tsx | 4.7.0 | **4.19.2** | ⬆️ 次版本升级 |
+| 包名        | 旧版本  | 新版本      | 变化          |
+| ----------- | ------- | ----------- | ------------- |
+| typescript  | 5.3.3   | **5.7.3**   | ⬆️ 次版本升级 |
+| tsx         | 4.7.0   | **4.19.2**  | ⬆️ 次版本升级 |
 | @types/node | 20.11.0 | **22.10.7** | ⬆️ 主版本升级 |
 
 ## 🔄 更新的文件
 
 ### Package.json 文件（6个）
+
 - ✅ `stage-01-langchain-basics/project/package.json`
 - ✅ `stage-01-langchain-basics/examples/01-basic-interaction/package.json`
 - ✅ `stage-01-langchain-basics/examples/02-message-system/package.json`
@@ -34,6 +36,7 @@
 - ✅ `stage-01-langchain-basics/examples/05-tool-system/package.json`
 
 ### 文档文件（2个）
+
 - ✅ `stage-01-langchain-basics/DEPENDENCIES.md`（新增）
 - ✅ `README.md`（添加依赖版本说明）
 

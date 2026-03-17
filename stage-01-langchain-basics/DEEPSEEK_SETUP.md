@@ -39,12 +39,14 @@ npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
 ## 📚 已适配 DeepSeek 的示例
 
 ### 第01章（已全部适配）
+
 - ✅ `01-hello-ai.ts` - 第一个 AI 程序
 - ✅ `02-interactive-chat.ts` - 交互式聊天
 - ✅ `03-temperature-demo.ts` - Temperature 参数
 - ✅ `04-streaming.ts` - 流式输出
 
 ### 其他章节
+
 其他章节的示例使用相同的配置方式，只需确保 `.env` 文件中有 DeepSeek 配置即可。
 
 ## 🔧 使用技巧
@@ -52,8 +54,8 @@ npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
 ### 在代码中使用 DeepSeek
 
 ```typescript
-import { ChatOpenAI } from '@langchain/openai'
-import 'dotenv/config'
+import { ChatOpenAI } from '@langchain/openai';
+import 'dotenv/config';
 
 const llm = new ChatOpenAI({
   modelName: 'deepseek-chat',
@@ -62,29 +64,29 @@ const llm = new ChatOpenAI({
     baseURL: process.env.DEEPSEEK_BASE_URL,
     apiKey: process.env.DEEPSEEK_API_KEY,
   },
-})
+});
 ```
 
 ### 使用配置工具（更简单）
 
 ```typescript
-import { createDeepSeekChat } from './stage-01-langchain-basics/examples/deepseek-config'
+import { createDeepSeekChat } from './stage-01-langchain-basics/examples/deepseek-config';
 
 const llm = createDeepSeekChat({
   temperature: 0.7,
   maxTokens: 2000,
-})
+});
 ```
 
 ## 💰 价格优势
 
 DeepSeek 的价格约为 OpenAI 的 1/10：
 
-| 模型 | 价格（百万tokens） |
-|------|------------------|
-| DeepSeek | ￥1 |
-| GPT-4o-mini | $0.15 (约￥1) |
-| GPT-4 | $30 (约￥216) |
+| 模型        | 价格（百万tokens） |
+| ----------- | ------------------ |
+| DeepSeek    | ￥1                |
+| GPT-4o-mini | $0.15 (约￥1)      |
+| GPT-4       | $30 (约￥216)      |
 
 ## 🌟 DeepSeek 优势
 
@@ -110,7 +112,7 @@ const llm = new ChatOpenAI({
     baseURL: process.env.DEEPSEEK_BASE_URL,
     apiKey: process.env.DEEPSEEK_API_KEY,
   },
-})
+});
 ```
 
 ## ❓ 常见问题
@@ -121,7 +123,8 @@ A: 访问 https://platform.deepseek.com/
 
 ### Q: DeepSeek 支持哪些功能？
 
-A: 
+A:
+
 - ✅ 基础对话
 - ✅ 流式输出
 - ✅ Function Calling
@@ -131,6 +134,7 @@ A:
 ### Q: 遇到错误怎么办？
 
 检查：
+
 1. API Key 是否正确
 2. 网络连接是否正常
 3. `.env` 文件是否在项目根目录

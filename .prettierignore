@@ -1,0 +1,32 @@
+# Ignore build output
+build/
+dist/
+node_modules/
+
+# Ignore test coverage
+coverage/
+
+# Ignore environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore lock files
+pnpm-lock.yaml
+package-lock.json
+
+# Ignore generated files
+**/*.d.ts
+**/*.js.map
+**/*.js
+
+# Ignore configuration files
+.eslintrc.js
+.prettierrc.json
+.vscode/settings.json
+
+# Ignore documentation
+docs/
+tutorials/

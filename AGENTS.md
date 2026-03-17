@@ -1,11 +1,13 @@
 # AGENTS.md - AI Agent Development Tutorial
 
 ## Project Overview
+
 This repository contains a comprehensive tutorial for developing AI agents using LangChain.js and LangGraph.js. The project is structured as a pnpm workspace with multiple examples and a main project demonstrating AI agent development concepts.
 
 ## Build Commands
 
 ### Development
+
 ```bash
 # Start development server for main project
 pnpm dev
@@ -19,6 +21,7 @@ pnpm dev
 ```
 
 ### Production Build
+
 ```bash
 # Build the main project
 cd stage-01-langchain-basics/project
@@ -31,14 +34,17 @@ pnpm -r build
 ## Testing
 
 ### Running Tests
+
 Currently, there are no formal test suites set up. To add tests:
 
 1. Install testing framework (e.g., Vitest, Jest):
+
 ```bash
 pnpm add -D vitest @vitest/ui
 ```
 
 2. Add test scripts to package.json:
+
 ```json
 "scripts": {
   "test": "vitest",
@@ -48,6 +54,7 @@ pnpm add -D vitest @vitest/ui
 ```
 
 3. Run tests:
+
 ```bash
 # Run all tests
 pnpm test
@@ -62,6 +69,7 @@ pnpm vitest src/path/to/test.ts
 ## Code Style Guidelines
 
 ### TypeScript Configuration
+
 - Target: ES2022
 - Module: ESNext
 - Strict mode enabled (`strict: true`)
@@ -71,6 +79,7 @@ pnpm vitest src/path/to/test.ts
 ### General Guidelines
 
 #### Imports
+
 ```typescript
 // Standard imports first
 import { someFunction } from 'some-library';
@@ -87,12 +96,14 @@ import type { SomeType } from 'some-library';
 ```
 
 #### Formatting
+
 - Use 2 spaces for indentation
 - Max line length: 100 characters
 - Use semicolons
 - Use single quotes for strings unless interpolation is needed
 
 #### Types and Type Safety
+
 ```typescript
 // Always use explicit types
 const name: string = 'John';
@@ -119,6 +130,7 @@ function identity<T>(value: T): T {
 ```
 
 #### Naming Conventions
+
 - **Files**: kebab-case (e.g., `user-service.ts`, `api-client.ts`)
 - **Classes**: PascalCase (e.g., `UserService`, `ApiClient`)
 - **Interfaces**: PascalCase with `I` prefix (e.g., `IUser`, `IApiClient`)
@@ -127,6 +139,7 @@ function identity<T>(value: T): T {
 - **Types/Aliases**: PascalCase (e.g., `UserType`, `ApiResponse`)
 
 #### Error Handling
+
 ```typescript
 // Use try-catch for error-prone operations
 try {
@@ -138,7 +151,10 @@ try {
 
 // Create custom error types
 class CustomError extends Error {
-  constructor(message: string, public code: string) {
+  constructor(
+    message: string,
+    public code: string
+  ) {
     super(message);
     this.name = 'CustomError';
   }
@@ -162,6 +178,7 @@ function safeOperation(): Result<string> {
 ```
 
 #### Async/Await
+
 ```typescript
 // Use async/await for asynchronous operations
 async function fetchData() {
@@ -177,21 +194,19 @@ async function fetchData() {
 
 // Handle multiple async operations
 async function processData() {
-  const [data1, data2] = await Promise.all([
-    fetchData1(),
-    fetchData2()
-  ]);
+  const [data1, data2] = await Promise.all([fetchData1(), fetchData2()]);
   return { data1, data2 };
 }
 ```
 
 #### LangChain Specific Guidelines
+
 ```typescript
 // Use proper chain composition
 const chain = RunnableSequence.from([
   new PromptTemplate({ template, inputVariables: ['question'] }),
   model,
-  new StringOutputParser()
+  new StringOutputParser(),
 ]);
 
 // Define proper tool schemas
@@ -200,17 +215,17 @@ const tools: Tool[] = [
     name: 'search',
     description: 'Search the web',
     schema: z.object({
-      query: z.string().describe('Search query')
+      query: z.string().describe('Search query'),
     }),
-    func: async ({ query }) => searchWeb(query)
-  })
+    func: async ({ query }) => searchWeb(query),
+  }),
 ];
 
 // Create proper agent configurations
 const agent = await createReactAgent({
   tools,
   llm: model,
-  prompt: await hub.pull('hwchase17/react')
+  prompt: await hub.pull('hwchase17/react'),
 });
 ```
 
@@ -241,11 +256,14 @@ mutiAgent/
 ## Environment Setup
 
 ### Node.js and pnpm
+
 - Node.js: >=20.0.0
 - pnpm: >=8.0.0
 
 ### Environment Variables
+
 Create a `.env` file in the project root:
+
 ```env
 OPENAI_API_KEY=your-key-here
 ANTHROPIC_API_KEY=your-key-here
@@ -264,12 +282,14 @@ ANTHROPIC_API_KEY=your-key-here
 ## Cursor and Copilot Rules
 
 No specific Cursor or Copilot rules found in the repository. If you add them, place them in:
+
 - `.cursor/rules/` for Cursor rules
 - `.github/copilot-instructions.md` for Copilot rules
 
 ## Contributing
 
 When contributing to this project:
+
 1. Follow the established code style
 2. Add tests for new functionality
 3. Update documentation as needed
@@ -278,6 +298,7 @@ When contributing to this project:
 ## Troubleshooting
 
 Common issues and solutions:
+
 - TypeScript errors: Run `pnpm build` to check for type errors
 - Module resolution issues: Ensure imports use correct paths
 - API key errors: Verify environment variables are set correctly

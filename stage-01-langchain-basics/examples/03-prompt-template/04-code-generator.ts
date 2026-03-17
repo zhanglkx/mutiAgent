@@ -1,6 +1,6 @@
-import { ChatOpenAI } from '@langchain/openai'
-import { ChatPromptTemplate } from '@langchain/core/prompts'
-import 'dotenv/config'
+import { ChatOpenAI } from '@langchain/openai';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import 'dotenv/config';
 
 /**
  * 代码生成助手
@@ -8,11 +8,11 @@ import 'dotenv/config'
  * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
-type Framework = 'react' | 'vue' | 'angular'
+type Framework = 'react' | 'vue' | 'angular';
 
 class CodeGenerator {
-  private llm: ChatOpenAI
-  private templates: Record<Framework, ChatPromptTemplate>
+  private llm: ChatOpenAI;
+  private templates: Record<Framework, ChatPromptTemplate>;
 
   constructor() {
     // 使用 DeepSeek 模型替代 gpt-4o-mini
@@ -23,7 +23,7 @@ class CodeGenerator {
         baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
         apiKey: process.env.DEEPSEEK_API_KEY,
       },
-    })
+    });
 
     this.templates = {
       react: ChatPromptTemplate.fromMessages([
@@ -76,42 +76,36 @@ function Button({ text, onClick }: ButtonProps) {
         ],
         ['human', '生成组件：{description}'],
       ]),
-    }
+    };
   }
 
   async generate(framework: Framework, description: string): Promise<string> {
-    const template = this.templates[framework]
-    const messages = await template.formatMessages({ description })
-    const response = await this.llm.invoke(messages)
-    return response.content as string
+    const template = this.templates[framework];
+    const messages = await template.formatMessages({ description });
+    const response = await this.llm.invoke(messages);
+    return response.content as string;
   }
 }
 
 // 使用示例
 async function main() {
-  const generator = new CodeGenerator()
+  const generator = new CodeGenerator();
 
-  console.log('🏗️ 多框架代码生成助手\n')
-  console.log('='.repeat(60))
+  console.log('🏗️ 多框架代码生成助手\n');
+  console.log('='.repeat(60));
 
-  console.log('\n🔵 React 组件：')
-  console.log('-'.repeat(60))
-  const reactCode = await generator.generate(
-    'react',
-    '一个带加载状态的按钮，点击后显示 loading'
-  )
-  console.log(reactCode)
+  console.log('\n🔵 React 组件：');
+  console.log('-'.repeat(60));
+  const reactCode = await generator.generate('react', '一个带加载状态的按钮，点击后显示 loading');
+  console.log(reactCode);
 
-  console.log('\n🟢 Vue 3 组件：')
-  console.log('-'.repeat(60))
-  const vueCode = await generator.generate(
-    'vue',
-    '一个带验证的输入框，实时显示错误提示'
-  )
-  console.log(vueCode)
+  console.log('\n🟢 Vue 3 组件：');
+  console.log('-'.repeat(60));
+  const vueCode = await generator.generate('vue', '一个带验证的输入框，实时显示错误提示');
+  console.log(vueCode);
 
-  console.log('\n' + '='.repeat(60))
-  console.log('✅ 同一个类，支持多种框架的代码生成')
+  console.log('\n' + '='.repeat(60));
+  console.log('✅ 同一个类，支持多种框架的代码生成');
 }
 
-main().catch(console.error)
+main().catch(console.error);

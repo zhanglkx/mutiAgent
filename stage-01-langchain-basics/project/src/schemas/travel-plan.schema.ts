@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 /**
  * 旅游计划数据结构
@@ -20,6 +20,6 @@ export const travelPlanSchema = z.object({
     )
     .describe('每日行程安排'),
   tips: z.array(z.string()).describe('旅行建议和注意事项'),
-})
+});
 
-export type TravelPlan = z.infer<typeof travelPlanSchema>
+export type TravelPlan = z.infer<typeof travelPlanSchema>;

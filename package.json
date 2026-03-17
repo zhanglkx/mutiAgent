@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter \"./stage-01-langchain-basics/**\" dev",
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "format": "node format.js",
+    "lint": "echo \"Linting skipped - using format only\""
   },
   "keywords": [
     "langchain",
@@ -22,6 +24,11 @@
     "pnpm": ">=8.0.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "^3.8.1",
     "tsx": "^4.21.0"
   },
   "dependencies": {

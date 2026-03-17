@@ -1,9 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(pnpm add:*)",
-      "Bash(pnpm tsx:*)",
-      "Bash(tsx --version)"
-    ]
+    "allow": ["Bash(pnpm add:*)", "Bash(pnpm tsx:*)", "Bash(tsx --version)"]
   }
 }

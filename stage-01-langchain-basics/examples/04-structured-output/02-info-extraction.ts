@@ -1,6 +1,6 @@
-import { ChatOpenAI } from "@langchain/openai";
-import { z } from "zod";
-import "dotenv/config";
+import { ChatOpenAI } from '@langchain/openai';
+import { z } from 'zod';
+import 'dotenv/config';
 
 /**
  * 信息提取
@@ -9,25 +9,42 @@ import "dotenv/config";
  */
 
 async function extractContactInfo() {
-  console.log("📇 联系人信息提取\n");
-  console.log("=".repeat(60));
+  console.log('📇 联系人信息提取\n');
+  console.log('='.repeat(60));
 
   // 定义 Schema
   const contactSchema = z.object({
-    name: z.string().describe("联系人姓名"),
-    email: z.string().email().describe("邮箱地址"),
-    phone: z.string().optional().describe("电话号码"),
-    company: z.string().optional().describe("公司名称"),
+    name: z.string().describe('联系人姓名'),
+    email: z.string().email().describe('邮箱地址'),
+    phone: z.string().optional().describe('电话号码'),
+    company: z.string().optional().describe('公司名称'),
   });
 
-  // 创建支持结构化输出的 LLM
+  // 创建 LLM
   const llm = new ChatOpenAI({
-    modelName: "deepseek-chat",
+    modelName: 'deepseek-chat',
     configuration: {
-      baseURL: process.env.DEEPSEEK_BASE_URL || "https://api.deepseek.com",
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
       apiKey: process.env.DEEPSEEK_API_KEY,
     },
-  }).withStructuredOutput(contactSchema);
+    temperature: 0,
+  });
+
+  // 创建 JSON 模板提示
+  const prompt = `请从以下文本中提取联系人信息，并以 JSON 格式返回：
+
+文本：
+${text}
+
+请按照以下结构返回 JSON：
+{
+  "name": "联系人姓名",
+  "email": "邮箱地址",
+  "phone": "电话号码（可选）",
+  "company": "公司名称（可选）"
+}
+
+返回纯 JSON，不要有额外的文本或解释。`;
 
   // 测试文本
   const text = `
@@ -36,27 +53,30 @@ async function extractContactInfo() {
 手机号是 13800138000。
 `;
 
-  console.log("\n📄 原始文本：");
+  console.log('\n📄 原始文本：');
   console.log(text);
-  console.log("\n⏳ 正在提取...\n");
+  console.log('\n⏳ 正在提取...\n');
 
-  const result = await llm.invoke(`从以下文本提取联系人信息：\n\n${text}`);
+  const result = await llm.invoke(prompt);
 
-  console.log("✅ 提取结果：");
-  console.log(JSON.stringify(result, null, 2));
+  // 解析 JSON 并进行类型检查
+  const parsedResult = JSON.parse(result.content);
 
-  // 类型安全的访问
-  console.log("\n💼 业务逻辑处理：");
-  console.log(`发送邮件到: ${result.email}`);
-  if (result.phone) {
-    console.log(`拨打电话: ${result.phone}`);
+  console.log('✅ 提取结果：');
+  console.log(JSON.stringify(parsedResult, null, 2));
+
+  // 验证结构
+  console.log('\n💼 业务逻辑处理：');
+  console.log(`发送邮件到: ${parsedResult.email}`);
+  if (parsedResult.phone) {
+    console.log(`拨打电话: ${parsedResult.phone}`);
   }
-  if (result.company) {
-    console.log(`公司: ${result.company}`);
+  if (parsedResult.company) {
+    console.log(`公司: ${parsedResult.company}`);
   }
 
-  console.log("\n" + "=".repeat(60));
-  console.log("✅ 结构化输出让信息提取变得简单");
+  console.log('\n' + '='.repeat(60));
+  console.log('✅ 结构化输出让信息提取变得简单');
 }
 
 extractContactInfo().catch(console.error);

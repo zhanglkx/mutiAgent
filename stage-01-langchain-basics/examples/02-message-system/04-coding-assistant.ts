@@ -1,6 +1,6 @@
-import { ChatOpenAI } from '@langchain/openai'
-import { SystemMessage, HumanMessage } from '@langchain/core/messages'
-import 'dotenv/config'
+import { ChatOpenAI } from '@langchain/openai';
+import { SystemMessage, HumanMessage } from '@langchain/core/messages';
+import 'dotenv/config';
 
 /**
  * 智能编程助手
@@ -9,11 +9,11 @@ import 'dotenv/config'
  * 使用 DeepSeek 模型替代 OpenAI 模型
  */
 
-type Mode = 'review' | 'explain' | 'debug'
+type Mode = 'review' | 'explain' | 'debug';
 
 class CodingAssistant {
-  private llm: ChatOpenAI
-  private modes: Record<Mode, string>
+  private llm: ChatOpenAI;
+  private modes: Record<Mode, string>;
 
   constructor() {
     // 使用 DeepSeek 模型替代 gpt-4o-mini
@@ -24,7 +24,7 @@ class CodingAssistant {
         baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
         apiKey: process.env.DEEPSEEK_API_KEY,
       },
-    })
+    });
 
     this.modes = {
       review: `你是代码审查专家。
@@ -56,23 +56,23 @@ class CodingAssistant {
 4. 📚 预防建议
 
 给出可直接运行的修复代码。`,
-    }
+    };
   }
 
   async process(mode: Mode, code: string): Promise<string> {
     const messages = [
       new SystemMessage(this.modes[mode]),
       new HumanMessage(`代码：\n\`\`\`typescript\n${code}\n\`\`\``),
-    ]
+    ];
 
-    const response = await this.llm.invoke(messages)
-    return response.content as string
+    const response = await this.llm.invoke(messages);
+    return response.content as string;
   }
 }
 
 // 使用示例
 async function main() {
-  const assistant = new CodingAssistant()
+  const assistant = new CodingAssistant();
 
   // 示例代码（有 bug）
   const buggyCode = `
@@ -83,26 +83,26 @@ async function fetchData() {
     .then(json => data = json)
 
   return data  // bug: 返回 null
-}`
+}`;
 
-  console.log('👨‍💻 智能编程助手\n')
-  console.log('='.repeat(60))
-  console.log('🐛 调试模式')
-  console.log('='.repeat(60))
-  console.log(await assistant.process('debug', buggyCode))
+  console.log('👨‍💻 智能编程助手\n');
+  console.log('='.repeat(60));
+  console.log('🐛 调试模式');
+  console.log('='.repeat(60));
+  console.log(await assistant.process('debug', buggyCode));
 
-  console.log('\n' + '='.repeat(60))
-  console.log('📖 解释模式')
-  console.log('='.repeat(60))
+  console.log('\n' + '='.repeat(60));
+  console.log('📖 解释模式');
+  console.log('='.repeat(60));
 
   const goodCode = `
 const [count, setCount] = useState(0)
 
 useEffect(() => {
   document.title = \`Count: \${count}\`
-}, [count])`
+}, [count])`;
 
-  console.log(await assistant.process('explain', goodCode))
+  console.log(await assistant.process('explain', goodCode));
 }
 
-main().catch(console.error)
+main().catch(console.error);
