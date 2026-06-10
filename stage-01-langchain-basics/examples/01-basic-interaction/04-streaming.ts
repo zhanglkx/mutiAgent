@@ -1,21 +1,12 @@
-import { ChatOpenAI } from '@langchain/openai';
 import 'dotenv/config';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
  * 流式输出演示
- * 实现类似 ChatGPT 的逐字输出效果
- * 使用 DeepSeek 模型
+ * 实现类似 ChatGPT 的逐字输出效果（使用 DeepSeek 模型）。
  */
-
 async function streamingDemo() {
-  const llm = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    temperature: 0.7,
-    configuration: {
-      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-      apiKey: process.env.DEEPSEEK_API_KEY,
-    },
-  });
+  const llm = createChatModel({ temperature: 0.7 });
 
   console.log('🌊 流式输出演示\n');
   console.log('问题：用 100 字介绍 React 的核心特性\n');
@@ -33,4 +24,6 @@ async function streamingDemo() {
   console.log('\n✅ 流式输出完成');
 }
 
-streamingDemo().catch(console.error);
+streamingDemo().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});

@@ -1,12 +1,10 @@
-import { ChatOpenAI } from '@langchain/openai';
 import 'dotenv/config';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
  * Temperature 参数演示
- * 展示不同 temperature 值对输出的影响
- * 使用 DeepSeek 模型
+ * 展示不同 temperature 值对输出的影响（使用 DeepSeek 模型）。
  */
-
 async function testTemperature() {
   const prompt = '写一句关于春天的诗';
 
@@ -14,53 +12,31 @@ async function testTemperature() {
   console.log('提示词：', prompt);
   console.log('='.repeat(60));
 
-  const baseConfig = {
-    configuration: {
-      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-      apiKey: process.env.DEEPSEEK_API_KEY,
-    },
-  };
-
   // Temperature = 0（确定性输出）
   console.log('\n📍 Temperature = 0 (确定性输出)');
   console.log('-'.repeat(60));
-  const llm0 = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    temperature: 0,
-    ...baseConfig,
-  });
-
+  const llm0 = createChatModel({ temperature: 0 });
   for (let i = 1; i <= 3; i++) {
     const response = await llm0.invoke(prompt);
-    console.log(`第 ${i} 次: ${response.content}`);
+    console.log(`第 ${i} 次: ${response.content as string}`);
   }
 
   // Temperature = 0.7（平衡输出）
   console.log('\n📍 Temperature = 0.7 (平衡输出)');
   console.log('-'.repeat(60));
-  const llm07 = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    temperature: 0.7,
-    ...baseConfig,
-  });
-
+  const llm07 = createChatModel({ temperature: 0.7 });
   for (let i = 1; i <= 3; i++) {
     const response = await llm07.invoke(prompt);
-    console.log(`第 ${i} 次: ${response.content}`);
+    console.log(`第 ${i} 次: ${response.content as string}`);
   }
 
   // Temperature = 1.0（创造性输出）
   console.log('\n📍 Temperature = 1.0 (创造性输出)');
   console.log('-'.repeat(60));
-  const llm10 = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    temperature: 1.0,
-    ...baseConfig,
-  });
-
+  const llm10 = createChatModel({ temperature: 1.0 });
   for (let i = 1; i <= 3; i++) {
     const response = await llm10.invoke(prompt);
-    console.log(`第 ${i} 次: ${response.content}`);
+    console.log(`第 ${i} 次: ${response.content as string}`);
   }
 
   console.log('\n' + '='.repeat(60));
@@ -70,4 +46,6 @@ async function testTemperature() {
   console.log('- Temperature = 1.0: 输出创意十足，适合创作任务');
 }
 
-testTemperature().catch(console.error);
+testTemperature().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});
