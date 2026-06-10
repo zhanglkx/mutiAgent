@@ -66,10 +66,10 @@ async function main() {
   console.log('   - 工具可以组合使用完成复杂任务');
 }
 
-main().catch(error => {
-  console.error('\n❌ 错误:', error.message);
+main().catch((error: unknown) => {
+  console.error('\n❌ 错误:', error instanceof Error ? error.message : error);
   console.error('\n💡 请检查：');
-  console.error('   1. .env 文件中的 API Key 是否正确');
+  console.error('   1. .env 文件中的 DEEPSEEK_API_KEY 是否正确');
   console.error('   2. 网络连接是否正常');
   console.error('   3. API Key 是否有足够的额度');
 });
