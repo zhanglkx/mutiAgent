@@ -1,33 +1,17 @@
-import { ChatOpenAI } from '@langchain/openai';
-import { SystemMessage, HumanMessage } from '@langchain/core/messages';
 import 'dotenv/config';
+import { SystemMessage, HumanMessage } from '@langchain/core/messages';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
- * 智能编程助手
- * 功能：代码审查、解释、调试
- * 演示消息系统的综合应用
- * 使用 DeepSeek 模型替代 OpenAI 模型
+ * 智能编程助手：代码审查、解释、调试。
+ * 演示消息系统的综合应用（使用 DeepSeek 模型）。
  */
-
 type Mode = 'review' | 'explain' | 'debug';
 
 class CodingAssistant {
-  private llm: ChatOpenAI;
-  private modes: Record<Mode, string>;
-
-  constructor() {
-    // 使用 DeepSeek 模型替代 gpt-4o-mini
-    this.llm = new ChatOpenAI({
-      modelName: 'deepseek-chat',
-      temperature: 0.3,
-      configuration: {
-        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-        apiKey: process.env.DEEPSEEK_API_KEY,
-      },
-    });
-
-    this.modes = {
-      review: `你是代码审查专家。
+  private readonly llm = createChatModel({ temperature: 0.3 });
+  private readonly modes: Record<Mode, string> = {
+    review: `你是代码审查专家。
 审查重点：
 1. 代码规范（命名、格式）
 2. 潜在 bug
@@ -39,7 +23,7 @@ class CodingAssistant {
 ⚠️ 问题：
 💡 建议：`,
 
-      explain: `你是代码讲解专家。
+    explain: `你是代码讲解专家。
 讲解步骤：
 1. 概述功能（1 句话）
 2. 逐行解释
@@ -48,7 +32,7 @@ class CodingAssistant {
 
 使用 emoji 和清晰的排版。`,
 
-      debug: `你是调试专家。
+    debug: `你是调试专家。
 分析流程：
 1. 🔍 定位错误
 2. 🧠 分析原因
@@ -56,8 +40,7 @@ class CodingAssistant {
 4. 📚 预防建议
 
 给出可直接运行的修复代码。`,
-    };
-  }
+  };
 
   async process(mode: Mode, code: string): Promise<string> {
     const messages = [
@@ -70,11 +53,9 @@ class CodingAssistant {
   }
 }
 
-// 使用示例
 async function main() {
   const assistant = new CodingAssistant();
 
-  // 示例代码（有 bug）
   const buggyCode = `
 async function fetchData() {
   let data = null
@@ -105,4 +86,6 @@ useEffect(() => {
   console.log(await assistant.process('explain', goodCode));
 }
 
-main().catch(console.error);
+main().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});

@@ -1,22 +1,13 @@
-import { ChatOpenAI } from '@langchain/openai';
-import { SystemMessage, HumanMessage, AIMessage, ToolMessage } from '@langchain/core/messages';
 import 'dotenv/config';
+import { SystemMessage, HumanMessage, AIMessage, ToolMessage } from '@langchain/core/messages';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
- * 四种消息类型演示
- * SystemMessage, HumanMessage, AIMessage, ToolMessage
- * 使用 DeepSeek 模型替代 OpenAI 模型
+ * 四种消息类型演示：SystemMessage / HumanMessage / AIMessage / ToolMessage
+ * 使用 DeepSeek 模型。
  */
-
 async function demonstrateMessageTypes() {
-  // 使用 DeepSeek 模型替代 gpt-4o-mini
-  const llm = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    configuration: {
-      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-      apiKey: process.env.DEEPSEEK_API_KEY,
-    },
-  });
+  const llm = createChatModel();
 
   console.log('📝 LangChain 四种核心消息类型\n');
   console.log('='.repeat(60));
@@ -66,4 +57,6 @@ async function demonstrateMessageTypes() {
   console.log('\nAI 回复：', response.content);
 }
 
-demonstrateMessageTypes().catch(console.error);
+demonstrateMessageTypes().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});

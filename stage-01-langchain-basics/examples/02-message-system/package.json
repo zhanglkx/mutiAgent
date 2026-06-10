@@ -4,17 +4,19 @@
   "description": "第02章：消息系统详解示例",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch 01-message-types.ts"
+    "dev": "tsx watch 01-message-types.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
-    "langchain": "^1.2.32",
-    "@langchain/openai": "^1.2.13",
-    "@langchain/core": "^1.1.32",
-    "dotenv": "^16.4.5"
+    "@ai-agent/shared": "workspace:*",
+    "@langchain/core": "catalog:",
+    "@langchain/deepseek": "catalog:",
+    "dotenv": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.10.7",
-    "typescript": "^5.7.3",
-    "tsx": "^4.19.2"
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }
