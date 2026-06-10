@@ -4,15 +4,24 @@
   "description": "AI Agent 开发教程 - LangChain.js 和 LangGraph.js 完整学习项目",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "pnpm --filter \"./stage-01-langchain-basics/**\" dev",
-    "build": "pnpm -r build",
-    "format": "node format.js",
-    "lint": "echo \"Linting skipped - using format only\""
+    "build": "pnpm -r --no-bail build",
+    "typecheck": "pnpm -r --no-bail typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm build"
   },
   "keywords": [
     "langchain",
     "langgraph",
+    "deepseek",
     "ai",
     "agent",
     "tutorial"
@@ -21,19 +30,23 @@
   "license": "MIT",
   "engines": {
     "node": ">=20.0.0",
-    "pnpm": ">=8.0.0"
+    "pnpm": ">=9.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.57.1",
-    "@typescript-eslint/parser": "^8.57.1",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.5",
-    "prettier": "^3.8.1",
-    "tsx": "^4.21.0"
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "prettier": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
   },
-  "dependencies": {
-    "@langchain/core": "^1.1.32",
-    "@langchain/openai": "^1.2.13",
-    "dotenv": "^16.6.1"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

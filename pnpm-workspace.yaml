@@ -1,3 +1,29 @@
 packages:
+  - 'shared'
   - 'stage-01-langchain-basics/examples/*'
   - 'stage-01-langchain-basics/project'
+
+# 依赖版本单一来源（pnpm catalog）。
+# 所有 workspace 包通过 "catalog:" 引用，保证版本一致、升级只改这一处。
+catalog:
+  # --- LangChain / DeepSeek 运行时 ---
+  '@langchain/core': ^1.1.48
+  '@langchain/deepseek': ^1.0.27
+  zod: ^4.4.3
+  dotenv: ^17.4.2
+
+  # --- 构建 / 类型 ---
+  typescript: ^6.0.3
+  tsx: ^4.22.4
+  '@types/node': ^25.9.2
+
+  # --- 测试 ---
+  vitest: ^4.1.8
+  '@vitest/coverage-v8': ^4.1.8
+
+  # --- 代码质量 ---
+  eslint: ^10.4.1
+  '@eslint/js': ^10.0.1
+  typescript-eslint: ^8.61.0
+  prettier: ^3.8.4
+  eslint-config-prettier: ^10.1.8
