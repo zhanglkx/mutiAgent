@@ -1,21 +1,31 @@
 import { tool } from '@langchain/core/tools';
 import { z } from 'zod';
 
+/** 消费水平。 */
+export type BudgetLevel = '经济' | '舒适' | '豪华';
+
+/** 一个城市按消费水平组织的每日预算。 */
+type CityBudget = Record<BudgetLevel, number>;
+
+/** 内置的城市每日预算模拟数据（元/天）。 */
+const DAILY_BUDGET: Record<string, CityBudget> = {
+  北京: { 经济: 300, 舒适: 600, 豪华: 1200 },
+  上海: { 经济: 400, 舒适: 800, 豪华: 1500 },
+  成都: { 经济: 200, 舒适: 400, 豪华: 800 },
+  西安: { 经济: 250, 舒适: 500, 豪华: 1000 },
+  杭州: { 经济: 350, 舒适: 700, 豪华: 1300 },
+  深圳: { 经济: 400, 舒适: 800, 豪华: 1500 },
+};
+
+/** 未收录城市/水平时的兜底每日预算。 */
+const DEFAULT_DAILY_BUDGET = 500;
+
 /**
- * 预算计算工具
+ * 预算计算工具。
  */
 export const budgetTool = tool(
-  async ({ city, days, level }) => {
-    const dailyBudget: Record<string, Record<string, number>> = {
-      北京: { 经济: 300, 舒适: 600, 豪华: 1200 },
-      上海: { 经济: 400, 舒适: 800, 豪华: 1500 },
-      成都: { 经济: 200, 舒适: 400, 豪华: 800 },
-      西安: { 经济: 250, 舒适: 500, 豪华: 1000 },
-      杭州: { 经济: 350, 舒适: 700, 豪华: 1300 },
-      深圳: { 经济: 400, 舒适: 800, 豪华: 1500 },
-    };
-
-    const daily = dailyBudget[city]?.[level] || 500;
+  ({ city, days, level }) => {
+    const daily = DAILY_BUDGET[city]?.[level] ?? DEFAULT_DAILY_BUDGET;
     const total = daily * days;
 
     return JSON.stringify({
