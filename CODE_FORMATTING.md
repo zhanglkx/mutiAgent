@@ -37,7 +37,7 @@ pnpm lint
 
 ## 配置文件
 
-- `.eslintrc.js` - ESLint 配置
+- `eslint.config.js` - ESLint 扁平配置（flat config）
 - `.prettierrc.json` - Prettier 配置
 - `.prettierignore` - 忽略格式化的文件
 - `.vscode/settings.json` - VS Code 设置
