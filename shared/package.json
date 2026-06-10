@@ -1,0 +1,26 @@
+{
+  "name": "@ai-agent/shared",
+  "version": "1.0.0",
+  "description": "共享基础设施：DeepSeek 模型工厂 + 环境变量校验 + 公共类型",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@langchain/core": "catalog:",
+    "@langchain/deepseek": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}
