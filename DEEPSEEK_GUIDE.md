@@ -2,7 +2,8 @@
 
 ## 什么是 DeepSeek？
 
-DeepSeek 是中国的大语言模型，性能强大且价格实惠。
+DeepSeek 是中国的大语言模型，性能强大且价格实惠。本教程通过 LangChain.js 官方集成
+[`@langchain/deepseek`](https://www.npmjs.com/package/@langchain/deepseek) 的 `ChatDeepSeek` 接入。
 
 ### 优势
 
@@ -13,10 +14,12 @@ DeepSeek 是中国的大语言模型，性能强大且价格实惠。
 
 ### 模型列表
 
-| 模型名称       | 用途     | 价格           |
-| -------------- | -------- | -------------- |
-| deepseek-chat  | 通用对话 | ￥1/百万tokens |
-| deepseek-coder | 代码生成 | ￥1/百万tokens |
+| 模型名称          | 用途     | 工具调用 / 结构化输出 |
+| ----------------- | -------- | --------------------- |
+| deepseek-chat     | 通用对话 | ✅ 支持               |
+| deepseek-reasoner | 复杂推理 | ❌ 不支持             |
+
+> 注意：`deepseek-reasoner` 暂不支持工具调用与结构化输出，需要这些能力时请使用 `deepseek-chat`。
 
 ## 配置方法
 
@@ -26,122 +29,86 @@ DeepSeek 是中国的大语言模型，性能强大且价格实惠。
 
 ### 2. 配置环境变量
 
-在 `.env` 文件中添加：
+复制根目录 `.env.example` 为 `.env`，填入你的 Key：
 
-\`\`\`bash
+```bash
 DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxx
-DEEPSEEK_BASE_URL=https://api.deepseek.com
-\`\`\`
+# 可选：DEEPSEEK_MODEL=deepseek-chat
+# 可选：DEEPSEEK_API_BASE=https://api.deepseek.com
+```
 
-### 3. 使用方式
+`ChatDeepSeek` 会自动读取 `DEEPSEEK_API_KEY`，无需在代码里再写 `apiKey` 或 `baseURL`。
 
-#### 方式一：直接使用（推荐）
+### 3. 使用方式：统一的共享工厂（推荐）
 
-\`\`\`typescript
-import { ChatOpenAI } from '@langchain/openai'
-import 'dotenv/config'
+全项目通过共享包 `@ai-agent/shared` 的 `createChatModel()` 创建模型。
+它内部完成**环境变量校验**（缺 Key 会给出友好报错）并填充默认值：
 
-const llm = new ChatOpenAI({
-modelName: 'deepseek-chat',
-temperature: 0.7,
-configuration: {
-baseURL: process.env.DEEPSEEK_BASE_URL,
-apiKey: process.env.DEEPSEEK_API_KEY,
-},
-})
+```typescript
+import { createChatModel } from '@ai-agent/shared';
 
-const response = await llm.invoke('你好，介绍一下 React')
-console.log(response.content)
-\`\`\`
+// 普通对话
+const llm = createChatModel({ temperature: 0.7 });
+const response = await llm.invoke('你好，介绍一下 React');
+console.log(response.content);
 
-#### 方式二：使用配置工具
+// 工具调用
+const withTools = createChatModel({ temperature: 0 }).bindTools([myTool]);
 
-\`\`\`typescript
-import { createDeepSeekChat } from './deepseek-config'
-import 'dotenv/config'
+// 结构化输出（类型安全，无需手写 JSON.parse）
+const structured = createChatModel({ temperature: 0 }).withStructuredOutput(mySchema);
+const data = await structured.invoke('...'); // data 已是 z.infer<typeof mySchema>
+```
 
-// 创建聊天模型
-const llm = createDeepSeekChat({
-temperature: 0.7,
-maxTokens: 2000,
-})
+如果确实需要直接使用底层类：
 
-// 创建代码模型（用于代码生成）
-const coder = createDeepSeekCoder({
-temperature: 0.3, // 代码生成建议低温度
-})
-\`\`\`
+```typescript
+import { ChatDeepSeek } from '@langchain/deepseek';
+
+const llm = new ChatDeepSeek({ model: 'deepseek-chat', temperature: 0.7 });
+```
 
 ## 已适配的示例
 
-所有示例都已支持 DeepSeek，只需：
+所有示例都已迁移到 `ChatDeepSeek`，只需：
 
 1. 配置好 `.env` 文件
 2. 直接运行示例即可
 
-\`\`\`bash
-
+```bash
 # 运行第一个示例
+pnpm dlx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
+```
 
-npx tsx stage-01-langchain-basics/examples/01-basic-interaction/01-hello-ai.ts
-\`\`\`
+## DeepSeek 支持的功能
 
-## 性能对比
-
-| 指标     | DeepSeek       | GPT-4o-mini      | Claude 3.5    |
-| -------- | -------------- | ---------------- | ------------- |
-| 价格     | ￥1/百万tokens | $0.15/百万tokens | $3/百万tokens |
-| 中文理解 | ⭐⭐⭐⭐⭐     | ⭐⭐⭐⭐         | ⭐⭐⭐⭐⭐    |
-| 代码生成 | ⭐⭐⭐⭐⭐     | ⭐⭐⭐⭐         | ⭐⭐⭐⭐⭐    |
-| 响应速度 | ⚡⚡⚡         | ⚡⚡             | ⚡⚡          |
-
-## 注意事项
-
-1. **API 兼容性**：DeepSeek 完全兼容 OpenAI API，无需修改代码逻辑
-2. **模型选择**：
-   - 一般对话：使用 `deepseek-chat`
-   - 代码生成：使用 `deepseek-coder`
-3. **温度设置**：
-   - 对话：0.7-0.9
-   - 代码：0.1-0.3
+- ✅ 基础对话
+- ✅ 流式输出（`llm.stream(...)`）
+- ✅ Function Calling（工具调用，`bindTools`）
+- ✅ 结构化输出（`withStructuredOutput`）
+- ✅ 多轮对话
+- ✅ 标准 token 用量字段 `response.usage_metadata.total_tokens`
 
 ## 常见问题
 
-### Q: 如何切换回 OpenAI？
+### Q: 报错「环境变量校验失败 / DEEPSEEK_API_KEY」？
 
-A: 修改代码中的初始化部分：
+A: 说明 `.env` 未配置或 Key 为空。复制 `.env.example` 为 `.env` 并填入有效 Key。
 
-\`\`\`typescript
-// 改回 OpenAI
-const llm = new ChatOpenAI({
-modelName: 'gpt-4o-mini',
-temperature: 0.7,
-})
-\`\`\`
+### Q: 结构化输出报 `json_schema is unavailable`？
 
-### Q: DeepSeek 支持哪些功能？
+A: 这是早期用 `ChatOpenAI` 直连 DeepSeek 的已知问题。本教程已改用 `ChatDeepSeek`，
+它会自动选择 DeepSeek 支持的方式（function calling），不会触发该错误。
 
-A: 支持所有教程中的功能：
+### Q: 遇到其他错误怎么办？
 
-- ✅ 基础对话
-- ✅ 流式输出
-- ✅ Function Calling（工具调用）
-- ✅ 结构化输出
-- ✅ 多轮对话
-
-### Q: 遇到错误怎么办？
-
-A: 检查：
-
-1. API Key 是否正确
-2. baseURL 是否配置
-3. 网络连接是否正常
+A: 检查 1) API Key 是否正确；2) 网络连接是否正常；3) 账户额度是否充足。
 
 ## 相关链接
 
-- [DeepSeek 官网](https://www.deepseek.com/)
 - [DeepSeek 平台](https://platform.deepseek.com/)
-- [API 文档](https://platform.deepseek.com/api-docs/)
+- [ChatDeepSeek 集成文档](https://docs.langchain.com/oss/javascript/integrations/chat/deepseek)
+- [LangChain.js 文档](https://js.langchain.com/)
 
 ---
 

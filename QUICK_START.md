@@ -38,11 +38,11 @@ cp .env.example .env
 
 # 用文本编辑器打开 .env 文件
 
-# 将 OPENAI_API_KEY 的值替换为你的 API Key
+# 将 DEEPSEEK_API_KEY 的值替换为你的 API Key
 
 \`\`\`
 
-**获取 API Key**: https://platform.openai.com/api-keys
+**获取 API Key**: https://platform.deepseek.com/
 
 ## 🎮 运行你的第一个示例
 
@@ -109,10 +109,12 @@ pnpm start
 
 \`\`\`bash
 
-# 验证项目完整性
+# 代码质量（在项目根目录运行）
 
-cd stage-01-langchain-basics
-./verify-project.sh
+pnpm typecheck # 类型检查
+pnpm lint # 代码规范检查
+pnpm test # 运行单元测试
+pnpm verify # 一键全检查（typecheck + lint + test + build）
 
 # 运行任意示例（通用格式）
 
@@ -145,12 +147,12 @@ A:
 2. 检查 Node.js 版本是否 >= 20
 3. 确认 .env 文件中的 API Key 正确
 
-### Q: 如何切换到 Claude 模型？
+### Q: 如何切换模型（如 deepseek-reasoner）？
 
-A: 修改代码中的导入和初始化：
+A: 通过共享工厂传入模型名即可：
 \`\`\`typescript
-import { ChatAnthropic } from '@langchain/anthropic'
-const llm = new ChatAnthropic({ modelName: 'claude-3-5-sonnet-20241022' })
+import { createChatModel } from '@ai-agent/shared'
+const llm = createChatModel({ model: 'deepseek-reasoner' })
 \`\`\`
 
 ## 📖 推荐阅读顺序

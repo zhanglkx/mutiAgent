@@ -75,13 +75,13 @@ cp .env.example .env
 
 \`\`\`bash
 
-# OpenAI API Key (推荐用于学习)
+# DeepSeek API Key (必填)
 
-OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxx
+DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Anthropic API Key (推荐用于生产，可选)
+# 可选：模型名（默认 deepseek-chat）
 
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxx
+# DEEPSEEK_MODEL=deepseek-chat
 
 # LangSmith 调试工具 (可选)
 
@@ -133,11 +133,13 @@ mutiAgent/
 ## 🛠️ 技术栈
 
 - **运行时**: Node.js 20+
-- **包管理**: pnpm (workspace)
+- **包管理**: pnpm (workspace + catalog 版本统一)
 - **语言**: TypeScript
 - **AI 框架**: LangChain.js, LangGraph.js
-- **模型提供商**: OpenAI, Anthropic
+- **模型提供商**: DeepSeek（`@langchain/deepseek`）
 - **数据验证**: Zod
+- **测试**: Vitest
+- **代码质量**: ESLint (flat config) + Prettier
 - **开发工具**: tsx
 
 ## 💡 为什么使用 Monorepo？
@@ -236,8 +238,7 @@ pnpm --filter "@ai-agent/\*" install
 
 A:
 
-- OpenAI: https://platform.openai.com/api-keys
-- Anthropic: https://console.anthropic.com/
+- DeepSeek: https://platform.deepseek.com/
 
 ### Q: 如何贡献新的示例？
 
