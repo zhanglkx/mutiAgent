@@ -4,18 +4,20 @@
   "description": "第05章：工具系统核心示例",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch 01-basic-tool.ts"
+    "dev": "tsx watch 01-basic-tool.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
-    "langchain": "^1.2.32",
-    "@langchain/openai": "^1.2.13",
-    "@langchain/core": "^1.1.32",
-    "zod": "^4.3.6",
-    "dotenv": "^16.4.5"
+    "@ai-agent/shared": "workspace:*",
+    "@langchain/core": "catalog:",
+    "@langchain/deepseek": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/node": "^22.10.7",
-    "typescript": "^5.7.3",
-    "tsx": "^4.19.2"
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }
