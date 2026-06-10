@@ -1,35 +1,19 @@
-import { ChatOpenAI } from '@langchain/openai';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
 import 'dotenv/config';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
- * 代码生成助手
- * 功能：根据描述生成 React/Vue/Angular 代码
- * 使用 DeepSeek 模型替代 OpenAI 模型
+ * 代码生成助手：根据描述生成 React/Vue/Angular 代码（使用 DeepSeek 模型）。
  */
-
 type Framework = 'react' | 'vue' | 'angular';
 
 class CodeGenerator {
-  private llm: ChatOpenAI;
-  private templates: Record<Framework, ChatPromptTemplate>;
-
-  constructor() {
-    // 使用 DeepSeek 模型替代 gpt-4o-mini
-    this.llm = new ChatOpenAI({
-      modelName: 'deepseek-chat',
-      temperature: 0.3,
-      configuration: {
-        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-        apiKey: process.env.DEEPSEEK_API_KEY,
-      },
-    });
-
-    this.templates = {
-      react: ChatPromptTemplate.fromMessages([
-        [
-          'system',
-          `你是 React 代码生成专家。
+  private readonly llm = createChatModel({ temperature: 0.3 });
+  private readonly templates: Record<Framework, ChatPromptTemplate> = {
+    react: ChatPromptTemplate.fromMessages([
+      [
+        'system',
+        `你是 React 代码生成专家。
 规则：
 1. 使用 TypeScript
 2. 使用函数组件和 Hooks
@@ -47,37 +31,36 @@ function Button({ text, onClick }: ButtonProps) {
   return <button onClick={onClick}>{text}</button>
 }
 \`\`\``,
-        ],
-        ['human', '生成组件：{description}'],
-      ]),
+      ],
+      ['human', '生成组件：{description}'],
+    ]),
 
-      vue: ChatPromptTemplate.fromMessages([
-        [
-          'system',
-          `你是 Vue 3 代码生成专家。
+    vue: ChatPromptTemplate.fromMessages([
+      [
+        'system',
+        `你是 Vue 3 代码生成专家。
 规则：
 1. 使用 <script setup> 语法
 2. 使用 TypeScript
 3. 使用 Composition API
 4. 代码要有注释`,
-        ],
-        ['human', '生成组件：{description}'],
-      ]),
+      ],
+      ['human', '生成组件：{description}'],
+    ]),
 
-      angular: ChatPromptTemplate.fromMessages([
-        [
-          'system',
-          `你是 Angular 代码生成专家。
+    angular: ChatPromptTemplate.fromMessages([
+      [
+        'system',
+        `你是 Angular 代码生成专家。
 规则：
 1. 使用最新的 Angular 语法
 2. 使用 TypeScript
 3. 包含 @Component 装饰器
 4. 代码要有注释`,
-        ],
-        ['human', '生成组件：{description}'],
-      ]),
-    };
-  }
+      ],
+      ['human', '生成组件：{description}'],
+    ]),
+  };
 
   async generate(framework: Framework, description: string): Promise<string> {
     const template = this.templates[framework];
@@ -87,7 +70,6 @@ function Button({ text, onClick }: ButtonProps) {
   }
 }
 
-// 使用示例
 async function main() {
   const generator = new CodeGenerator();
 
@@ -108,4 +90,6 @@ async function main() {
   console.log('✅ 同一个类，支持多种框架的代码生成');
 }
 
-main().catch(console.error);
+main().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});

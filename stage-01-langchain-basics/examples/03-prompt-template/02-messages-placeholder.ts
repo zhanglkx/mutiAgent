@@ -1,24 +1,14 @@
-import { ChatOpenAI } from '@langchain/openai';
+import 'dotenv/config';
 import { ChatPromptTemplate, MessagesPlaceholder } from '@langchain/core/prompts';
 import { HumanMessage, AIMessage } from '@langchain/core/messages';
-import 'dotenv/config';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
- * MessagesPlaceholder 演示
- * 用于在模板中插入历史对话
- * 类似 React 的 children 属性
- * 使用 DeepSeek 模型替代 OpenAI 模型
+ * MessagesPlaceholder 演示：在模板中插入历史对话（类似 React 的 children）。
+ * 使用 DeepSeek 模型。
  */
-
 async function messagesPlaceholderDemo() {
-  // 使用 DeepSeek 模型替代 gpt-4o-mini
-  const llm = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    configuration: {
-      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-      apiKey: process.env.DEEPSEEK_API_KEY,
-    },
-  });
+  const llm = createChatModel();
 
   console.log('🔄 MessagesPlaceholder 演示\n');
   console.log('='.repeat(60));
@@ -39,10 +29,10 @@ async function messagesPlaceholderDemo() {
   ];
 
   console.log('\n📚 对话历史：');
-  history.forEach((msg, i) => {
+  for (const msg of history) {
     const role = msg instanceof HumanMessage ? '👤 用户' : '🤖 AI';
-    console.log(`${role}: ${msg.content}`);
-  });
+    console.log(`${role}: ${msg.content as string}`);
+  }
 
   // 新问题
   console.log('\n❓ 新问题：');
@@ -55,10 +45,12 @@ async function messagesPlaceholderDemo() {
 
   const response = await llm.invoke(messages);
   console.log('\n💡 AI 回复：');
-  console.log(`🤖 AI: ${response.content}`);
+  console.log(`🤖 AI: ${response.content as string}`);
 
   console.log('\n' + '='.repeat(60));
   console.log('✅ MessagesPlaceholder 让对话历史管理变得简单');
 }
 
-messagesPlaceholderDemo().catch(console.error);
+messagesPlaceholderDemo().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});

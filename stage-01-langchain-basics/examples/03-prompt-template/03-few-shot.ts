@@ -1,23 +1,12 @@
-import { ChatOpenAI } from '@langchain/openai';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
 import 'dotenv/config';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { createChatModel } from '@ai-agent/shared';
 
 /**
- * Few-Shot Learning 示例
- * 通过提供示例，让 AI 模仿特定格式
- * 使用 DeepSeek 模型替代 OpenAI 模型
+ * Few-Shot Learning 示例：通过提供示例，让 AI 模仿特定格式（使用 DeepSeek 模型）。
  */
-
 async function fewShotDemo() {
-  // 使用 DeepSeek 模型替代 gpt-4o-mini
-  const llm = new ChatOpenAI({
-    modelName: 'deepseek-chat',
-    temperature: 0.3,
-    configuration: {
-      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-      apiKey: process.env.DEEPSEEK_API_KEY,
-    },
-  });
+  const llm = createChatModel({ temperature: 0.3 });
 
   console.log('🎯 Few-Shot Learning 演示\n');
   console.log('='.repeat(60));
@@ -49,7 +38,7 @@ function Button({ text, onClick }: ButtonProps) {
       `\`\`\`typescript
 interface InputProps {
   value: string
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 function Input({ value, onChange }: InputProps) {
@@ -78,4 +67,6 @@ function Input({ value, onChange }: InputProps) {
   console.log('✅ AI 成功模仿了示例的格式和风格');
 }
 
-fewShotDemo().catch(console.error);
+fewShotDemo().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});
