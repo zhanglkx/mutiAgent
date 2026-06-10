@@ -1,118 +1,18 @@
-import { ChatOpenAI } from '@langchain/openai';
-import { z } from 'zod';
 import 'dotenv/config';
+import { createChatModel } from '@ai-agent/shared';
+import { resumeSchema, type Resume } from './schemas';
 
 /**
- * 简历解析器
- * 功能：从简历文本中提取结构化信息
- * 使用 DeepSeek 模型替代 OpenAI 模型
+ * 简历解析器：从简历文本中提取结构化信息（使用 DeepSeek 模型）。
  */
-
-// 定义简历结构
-const resumeSchema = z.object({
-  personal: z.object({
-    name: z.string(),
-    email: z.string().email(),
-    phone: z.string().optional(),
-    location: z.string().optional(),
-  }),
-
-  education: z.array(
-    z.object({
-      school: z.string(),
-      degree: z.string(),
-      major: z.string(),
-      startYear: z.number(),
-      endYear: z.number(),
-    })
-  ),
-
-  experience: z.array(
-    z.object({
-      company: z.string(),
-      position: z.string(),
-      startDate: z.string(),
-      endDate: z.string().optional(),
-      description: z.string(),
-    })
-  ),
-
-  skills: z.array(z.string()),
-
-  languages: z.array(
-    z.object({
-      name: z.string(),
-      level: z.enum(['native', 'fluent', 'intermediate', 'basic']),
-    })
-  ),
-});
-
-// 创建解析器
 class ResumeParser {
-  private llm: ChatOpenAI;
+  private readonly llm = createChatModel({ temperature: 0 }).withStructuredOutput(resumeSchema);
 
-  constructor() {
-    // 使用 DeepSeek 模型替代 gpt-4o-mini
-    this.llm = new ChatOpenAI({
-      modelName: 'deepseek-chat',
-      temperature: 0,
-      configuration: {
-        baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-        apiKey: process.env.DEEPSEEK_API_KEY,
-      },
-    });
-
-    // 创建 JSON 模板提示
-    this.prompt = `请从以下简历中提取结构化信息：
-
-简历文本：
-{resumeText}
-
-请按照以下结构返回 JSON：
-{
-  "personal": {
-    "name": "姓名",
-    "email": "邮箱",
-    "phone": "电话（可选）",
-    "location": "地点（可选）"
-  },
-  "education": [
-    {
-      "school": "学校名称",
-      "degree": "学位",
-      "major": "专业",
-      "startYear": "开始年份（数字）",
-      "endYear": "结束年份（数字）"
-    }
-  ],
-  "experience": [
-    {
-      "company": "公司名称",
-      "position": "职位",
-      "startDate": "开始日期",
-      "endDate": "结束日期（可选）",
-      "description": "工作描述"
-    }
-  ],
-  "skills": ["技能列表"],
-  "languages": [
-    {
-      "name": "语言名称",
-      "level": "语言水平（native/fluent/intermediate/basic）"
-    }
-  ]
-}
-
-返回纯 JSON，不要有额外的文本或解释。`;
-  }
-
-  async parse(resumeText: string) {
-    const result = await this.llm.invoke(this.prompt.replace('{resumeText}', resumeText));
-    return JSON.parse(result.content);
+  parse(resumeText: string): Promise<Resume> {
+    return this.llm.invoke(`请从以下简历中提取结构化信息：\n${resumeText}`);
   }
 }
 
-// 测试
 const resumeText = `
 张三
 邮箱：zhangsan@example.com
@@ -142,7 +42,6 @@ async function main() {
   const parser = new ResumeParser();
 
   console.log('\n⏳ 正在解析简历...\n');
-
   const resume = await parser.parse(resumeText);
 
   console.log('✅ 解析结果：');
@@ -157,14 +56,18 @@ async function main() {
   console.log(`掌握技能：${resume.skills.length} 项`);
   console.log(`语言能力：${resume.languages.length} 种`);
 
-  console.log('\n💼 最新工作：');
   const latestJob = resume.experience[0];
-  console.log(`公司：${latestJob.company}`);
-  console.log(`职位：${latestJob.position}`);
-  console.log(`入职时间：${latestJob.startDate}`);
+  if (latestJob) {
+    console.log('\n💼 最新工作：');
+    console.log(`公司：${latestJob.company}`);
+    console.log(`职位：${latestJob.position}`);
+    console.log(`入职时间：${latestJob.startDate}`);
+  }
 
   console.log('\n' + '='.repeat(60));
   console.log('✅ 结构化输出让简历解析变得简单');
 }
 
-main().catch(console.error);
+main().catch((error: unknown) => {
+  console.error('❌ 运行失败:', error instanceof Error ? error.message : error);
+});
